@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <%- include("../partials/header.ejs") %>
+</head>
+
+<body>
+  <div class="container-fluid position-relative d-flex p-0">
+    <!-- Spinner Start -->
+    <%- include("../partials/spinner.ejs") %>
+      <!-- Spinner End -->
+
+
+      <!-- Sidebar Start -->
+      <%- include("../partials/sidebar.ejs") %>
+        <!-- Sidebar End -->
+
+
+        <!-- Content Start -->
+        <div class="content">
+          <!-- Navbar Start -->
+          <%- include("../partials/navbar.ejs") %>
+            <!-- Navbar End -->
+
+
+            <!-- Blank Start -->
+            <div class="container-fluid pt-4 px-4">
+              <div class="row vh-100 bg-secondary rounded align-items-center justify-content-center mx-0">
+                <div class="col-md-6 text-center">
+                  <h3>This is blank page</h3>
+                </div>
+              </div>
+            </div>
+            <!-- Blank End -->
+
+
+            <!-- Footer Start -->
+            <%- include("../partials/footer.ejs") %>
+              <!-- Footer End -->
+        </div>
+        <!-- Content End -->
+
+
+        <!-- Back to Top -->
+        <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
+  </div>
+
+  <!-- JavaScript Libraries -->
+  <%- include("../partials/jslib.ejs") %>
+
+    <!-- Template Javascript -->
+    <%- include("../partials/template.ejs") %>
+</body>
+
+</html>

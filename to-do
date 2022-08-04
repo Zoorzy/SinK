@@ -1,0 +1,11 @@
+Trovare i tag html vulnerabili (input / select / ecc) => sinks
+Gestire i tag html come oggetti json (?)
+ --- Render della pagina html direttamente dall'editor, non da iframe src (magari con il render di express, ogni tot mando na richiesta che aggiorna... naah) =====> ejs (?)
+Trovare i parametri del link passato e modificarli per vedere come si riflettono
+Sviluppare un authstealer che salvi in log.txt i dati rubati dalle sessioni degli altri kinda cool ma non centra na sega
+
+ --- ejs per rendere pagine html dinamiche con parametri post
+sistemare attack schema
+navbar
+
+source =/ sink
