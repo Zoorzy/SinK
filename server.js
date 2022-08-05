@@ -1,7 +1,7 @@
 const express = require('express')
 const app = express()
 const mongoose = require('mongoose')
-const bodyParser = require('body-parser')
+//const bodyParser = require('body-parser')
 require('dotenv/config')
 const cors = require('cors')
 const axios = require('axios')
@@ -40,22 +40,19 @@ app.post('/proxyServer', (req, res) => {
   })
 })
 
-// default 404 not found
+// 404 not found
 app.use((req, res) => {
   res.status(404);
-
   // respond with html page
   if (req.accepts('html')) {
     res.render('pages/404.ejs', { url: req.url });
     return;
   }
-
   // respond with json
   if (req.accepts('json')) {
     res.send({ error: 'Not found' });
     return;
   }
-
   // default to plain-text. send()
   res.type('txt').send('Not found');
 })

@@ -1,0 +1,7 @@
+#Version: 1.0
+#Date: 12-Aug-2022 00:00:00
+#Fields: time cs-method cs-uri
+00:34:23 GET /foo/bar.html
+12:21:16 GET /foo/bar.html
+12:45:52 GET /foo/bar.html
+12:57:34 GET /foo/bar.html

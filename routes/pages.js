@@ -3,6 +3,9 @@ const router = express.Router()
 const path = require('path')
 const pages = path.join(__dirname, '..', 'views', 'pages')
 
+router.use(express.urlencoded());
+router.use(express.json());
+
 router.get(['/', '/index.ejs', '/index.html'], (req, res) => {
   try{
     res.render('../views/pages/index.ejs')

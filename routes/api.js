@@ -1,45 +1,43 @@
 const express = require('express')
 const router = express.Router()
-const Attack = require('../models/Attack')
-const bodyParser = require('body-parser')
+const Vulnerability = require('../models/Vulnerability')
+//const bodyParser = require('body-parser')
 
-// GET THE LAST 10 ATTACK REPORT
-router.get('/attacks', async (req, res) => {
+// GET THE LAST 10 VULNERABILITIES REPORT
+router.get('/vuln', async (req, res) => {
   try {
     let limit = 10
-    const attacks = await Attack.find().limit(limit)
-    res.json(attacks)
+    const vulnerabilities = await Vulnerability.find().limit(limit)
+    res.json(vulnerabilities)
   } catch (err) {
     res.json(err)
   }
 })
 
-// SPECIFIC ATTACK
-router.get('/:attackId', async (req, res) => {
+// SPECIFIC VULNERABILITY
+router.get('/:vulnId', async (req, res) => {
   try {
-    const attack = await Attack.findById(req.params.attackId)
-    res.json(attack)
+    const vulnerability = await Vulnerability.findById(req.params.vulnId)
+    res.json(vulnerability)
   } catch (err) {
     res.json(err)
   }
 })
-
-// SUBMTS AN ATTACK
+/*
+// SUBMTS A VULNERABILITY
 router.post('/new', bodyParser.json(), async (req, res) => {
-  const attack = new Attack({
+  const vulnerability = new Vulnerability({
     title: req.body.title,
     description: req.body.description,
     url: req.body.url
   })
 
   try {
-    const savedAttack = await attack.save();
-    //console.log(req.body.title)
-    //console.log(req.body.description)
-    res.json(savedAttack);
+    const saved = await vulnerability.save();
+    res.json(saved);
   } catch (err) {
     res.json(err);
   }
 })
-
+*/
 module.exports = router;
