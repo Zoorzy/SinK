@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="it-IT">
+
+<head>
+  <%- include("../partials/header.ejs") %>
+</head>
+
+<body>
+  <div class="container-fluid position-relative d-flex p-0">
+    <!-- Spinner Start -->
+    <%- include("../partials/spinner.ejs") %>
+      <!-- Spinner End -->
+
+      <!-- Sidebar Start -->
+      <%- include("../partials/sidebar.ejs") %>
+        <!-- Sidebar End -->
+
+        <!-- Content Start -->
+        <div class="content">
+          <!-- Navbar Start -->
+          <%- include("../partials/navbar.ejs") %>
+            <!-- Navbar End -->
+
+            <!-- Form Start -->
+            <div class="container-fluid pt-4 px-4">
+              <div class="row g-4">
+
+                <!-- Input Start -->
+                <div class="col-sm-12 col-xl-6">
+                  <div class="bg-secondary rounded h-100 p-4">
+
+                    <h6 class="mb-4">File Input</h6>
+                    <div class="mb-3">
+                      <!--<label for="formFile" class="form-label">Carica i link target</label>-->
+                      <input class="form-control bg-dark" type="file" id="urlFile">
+                    </div>
+
+                  </div>
+                </div>
+                <!-- Input End -->
+
+                <!-- Preview Start -->
+                <div class="col-sm-12 col-xl-6 preview">
+                  <div class="bg-secondary rounded h-100 p-4">
+                    <form action="" method="post">
+                      <h6 class="mb-4">Editable Preview</h6>
+                      <textarea name="previewContent" id="previewContent" style="width: 100%" rows="6"></textarea>
+                      <br />
+                      <br />
+
+                      <!-- Button Start -->
+                      <!--<div class="container-fluid pt-4 px-4">-->
+                      <!--<div class="row g-4">-->
+                      <!--<h6 class="mb-4">Basic Buttons</h6>-->
+                      <div class="m-n2">
+                        <button type="button" class="btn btn-success m-2" onclick="scan()">SCAN</button>
+                      </div>
+                      <!--</div>-->
+                      <!--</div>-->
+                      <!-- Button End -->
+                    </form>
+                  </div>
+                </div>
+                <!-- Preview End -->
+
+                <script>
+                  document.addEventListener("DOMContentLoaded", () => {
+                    const scanBtn = document.getElementById("scanBtn")
+                    const previewContent = document.getElementById("previewContent")
+                  })
+                  document.getElementById("urlFile").addEventListener("change", (e) => {
+                    var file = e.target.files[0]
+                    if (file) {
+                      var reader = new FileReader()
+                      reader.readAsText(file, "UTF-8")
+                      reader.onload = function (evt) {
+                        previewContent.value = ""
+                        var lines = evt.target.result.split('\n');
+                        Array.prototype.slice.call(lines).forEach(element => {
+                          previewContent.value += element
+                        })
+                      }
+                      reader.onerror = function (evt) {
+                        previewContent.value = "error reading file: " + evt.target.error
+                      }
+                    }
+                  })
+                  function scan() {
+                    console.log(previewContent.value)
+                    // send form values to the scanning process
+                  }
+                </script>
+
+              </div>
+            </div>
+            <!-- Form End -->
+
+            <!-- Footer Start -->
+            <%- include("../partials/footer.ejs") %>
+              <!-- Footer End -->
+        </div>
+        <!-- Content End -->
+
+
+        <!-- Back to Top -->
+        <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
+  </div>
+
+  <!-- JavaScript Libraries -->
+  <%- include("../partials/jslib.ejs") %>
+
+    <!-- Template Javascript -->
+    <%- include("../partials/template.ejs") %>
+</body>
+
+</html>

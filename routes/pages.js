@@ -13,6 +13,20 @@ router.get(['/', '/index.ejs', '/index.html'], (req, res) => {
     res.end(err)
   }
 })
+router.get('/input.ejs', (req, res) => {
+  try{
+    res.render('../views/pages/input.ejs')
+  } catch (err){
+    res.end(err)
+  }
+})
+router.get('/reports.ejs', (req, res) => {
+  try{
+    res.render('../views/pages/reports.ejs')
+  } catch (err){
+    res.end(err)
+  }
+})
 router.get('/widget.ejs', (req, res) => {
   try{
     res.render('../views/pages/widget.ejs')
