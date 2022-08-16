@@ -1,9 +1,9 @@
+const compression = require('compression');
 const express = require('express')
 const app = express()
 const mongoose = require('mongoose')
-//const bodyParser = require('body-parser')
 require('dotenv/config')
-const cors = require('cors')
+//const cors = require('cors')
 const axios = require('axios')
 const port = 80
 
@@ -15,9 +15,8 @@ app.use(
 )
 */
 
+app.use(compression())
 app.set('view engine', 'ejs');
-//app.use(bodyParser.json())
-//app.use(bodyParser.urlencoded({ extended: true }))
 
 // IMPORT ROUTES
 //localhost:8080/
@@ -32,7 +31,7 @@ app.use(express.static('routes'))
 // PROXY SERVER TO PREVENT CORS WEB BROWSERS' POLICY
 app.post('/proxyServer', (req, res) => {
   let endpoint = req.body.url
-  console.log(endpoint)
+  //console.log(endpoint)
   axios.get(endpoint).then(response => {
     res.setHeader('Content-Type', 'text/plain')
     res.send(response.data)

@@ -29,7 +29,9 @@
                 <div class="col-sm-12 col-xl-6">
                   <div class="bg-secondary rounded h-100 p-4">
 
-                    <label for="urlFile"><h6 class="mb-4">File Input</h6></label>
+                    <label for="urlFile">
+                      <h6 class="mb-4">File Input</h6>
+                    </label>
                     <div class="mb-3">
                       <!--<label for="formFile" class="form-label">Carica i link target</label>-->
                       <input class="form-control bg-dark" type="file" id="urlFile">
@@ -42,11 +44,13 @@
                 <!-- Preview Start -->
                 <div class="col-sm-12 col-xl-6 preview">
                   <div class="bg-secondary rounded h-100 p-4">
+                    <label for="previewContent">
+                      <h6 class="mb-4">Editable Preview</h6>
+                    </label>
+                    <textarea name="previewContent" id="previewContent" style="width: 100%" rows="6"></textarea>
+                    <br />
+                    <br />
                     <form action="scan.ejs" method="post" name="scanform">
-                      <label for="previewContent"><h6 class="mb-4">Editable Preview</h6></label>
-                      <textarea name="previewContent" id="previewContent" style="width: 100%" rows="6"></textarea>
-                      <br />
-                      <br />
 
                       <!-- Button Start -->
                       <!--<div class="container-fluid pt-4 px-4">-->

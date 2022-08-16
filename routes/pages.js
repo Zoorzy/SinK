@@ -1,9 +1,9 @@
 const express = require('express')
 const router = express.Router()
 const path = require('path')
-const pages = path.join(__dirname, '..', 'views', 'pages')
+//const pages = path.join(__dirname, '..', 'views', 'pages')
 
-router.use(express.urlencoded());
+router.use(express.urlencoded({ extended: true }))
 router.use(express.json());
 
 router.get(['/', '/index.ejs'], (req, res) => {
@@ -29,7 +29,7 @@ router.get('/input.ejs', (req, res) => {
 })
 router.post('/scan.ejs', (req, res) => {
   try{
-    console.log(req.body)
+    //console.log(req.body)
     res.render('../views/pages/scan.ejs', {url: req.body.url})
   } catch (err){
     res.end(err)
