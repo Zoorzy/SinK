@@ -29,7 +29,7 @@
                 <div class="col-sm-12 col-xl-6">
                   <div class="bg-secondary rounded h-100 p-4">
 
-                    <h6 class="mb-4">File Input</h6>
+                    <label for="urlFile"><h6 class="mb-4">File Input</h6></label>
                     <div class="mb-3">
                       <!--<label for="formFile" class="form-label">Carica i link target</label>-->
                       <input class="form-control bg-dark" type="file" id="urlFile">
@@ -42,8 +42,8 @@
                 <!-- Preview Start -->
                 <div class="col-sm-12 col-xl-6 preview">
                   <div class="bg-secondary rounded h-100 p-4">
-                    <form action="" method="post">
-                      <h6 class="mb-4">Editable Preview</h6>
+                    <form action="scan.ejs" method="post" name="scanform">
+                      <label for="previewContent"><h6 class="mb-4">Editable Preview</h6></label>
                       <textarea name="previewContent" id="previewContent" style="width: 100%" rows="6"></textarea>
                       <br />
                       <br />
@@ -53,7 +53,7 @@
                       <!--<div class="row g-4">-->
                       <!--<h6 class="mb-4">Basic Buttons</h6>-->
                       <div class="m-n2">
-                        <button type="button" class="btn btn-success m-2" onclick="scan()">SCAN</button>
+                        <button type="button" class="btn btn-success m-2" onclick="post()">SCAN</button>
                       </div>
                       <!--</div>-->
                       <!--</div>-->
@@ -85,10 +85,25 @@
                       }
                     }
                   })
-                  function scan() {
-                    console.log(previewContent.value)
-                    // send form values to the scanning process
+
+                  /**
+                   * sends a request to the specified url from a form. this will change the window location.
+                   * @param {object} params the parameters to add to the url
+                   */
+                  function post() {
+                    var params = document.getElementById('previewContent').value.split('\n')
+                    for (const key in params) {
+                      if (params.hasOwnProperty(key)) {
+                        const hiddenField = document.createElement('input');
+                        hiddenField.type = 'hidden';
+                        hiddenField.name = 'url[]';
+                        hiddenField.value = params[key];
+                        document.scanform.appendChild(hiddenField);
+                      }
+                    }
+                    document.scanform.submit();
                   }
+
                 </script>
 
               </div>

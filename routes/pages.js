@@ -6,9 +6,16 @@ const pages = path.join(__dirname, '..', 'views', 'pages')
 router.use(express.urlencoded());
 router.use(express.json());
 
-router.get(['/', '/index.ejs', '/index.html'], (req, res) => {
+router.get(['/', '/index.ejs'], (req, res) => {
   try{
     res.render('../views/pages/index.ejs')
+  } catch (err){
+    res.end(err)
+  }
+})
+router.get('/index.html', (req, res) => {
+  try{
+    res.redirect('/index.ejs')
   } catch (err){
     res.end(err)
   }
@@ -16,6 +23,21 @@ router.get(['/', '/index.ejs', '/index.html'], (req, res) => {
 router.get('/input.ejs', (req, res) => {
   try{
     res.render('../views/pages/input.ejs')
+  } catch (err){
+    res.end(err)
+  }
+})
+router.post('/scan.ejs', (req, res) => {
+  try{
+    console.log(req.body)
+    res.render('../views/pages/scan.ejs', {url: req.body.url})
+  } catch (err){
+    res.end(err)
+  }
+})
+router.get('/scan.ejs', (req, res) => {
+  try{
+    res.redirect('/input.ejs')
   } catch (err){
     res.end(err)
   }
