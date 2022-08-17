@@ -12,7 +12,7 @@
   }
   function workerDone(e) {
     --running;
-    var btn = document.getElementsByClassName('btn')[e.data.id]
+    var btn = document.getElementsByClassName('scanBtn')[e.data.id]
     btn.disabled = false
     btn.textContent = "Scan"
   }

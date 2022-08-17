@@ -6,3 +6,6 @@ https://xss-quiz.int21h.jp/
 http://sudo.co.il/xss/
 http://vulnweb.com/
 http://unimia.unimi.it/portal/server.pt/community/unimia/207
+https://www.corriere.it/
+https://www.repubblica.it/
+https://ilmanifesto.it/
