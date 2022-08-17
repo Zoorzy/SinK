@@ -57,7 +57,7 @@
                       <!--<div class="row g-4">-->
                       <!--<h6 class="mb-4">Basic Buttons</h6>-->
                       <div class="m-n2">
-                        <button type="button" class="btn btn-success m-2" onclick="post()">SCAN</button>
+                        <button type="button" class="btn btn-outline-danger m-2" onclick="post()">Next</button>
                       </div>
                       <!--</div>-->
                       <!--</div>-->
@@ -94,17 +94,35 @@
                    * @param {object} params the parameters to add to the url
                    */
                   function post() {
-                    var params = document.getElementById('previewContent').value.split('\n')
+                    var params = document.getElementById('previewContent').value.split('\n'), urlObj
                     for (const key in params) {
-                      if (params.hasOwnProperty(key)) {
+
+                      urlObj = params[key]
+
+                      if (params.hasOwnProperty(key) && isValidHttpUrl(urlObj)) {
+                        
                         const hiddenField = document.createElement('input');
                         hiddenField.type = 'hidden';
                         hiddenField.name = 'url[]';
-                        hiddenField.value = params[key];
+                        hiddenField.value = urlObj
                         document.scanform.appendChild(hiddenField);
+                        
                       }
+
                     }
                     document.scanform.submit();
+                  }
+
+                  function isValidHttpUrl(string) {
+                    let url;
+
+                    try {
+                      url = new URL(string);
+                    } catch (err) {
+                      return false;
+                    }
+
+                    return url.protocol === "http:" || url.protocol === "https:";
                   }
 
                 </script>

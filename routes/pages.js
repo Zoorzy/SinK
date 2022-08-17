@@ -35,9 +35,18 @@ router.post('/scan.ejs', (req, res) => {
     res.end(err)
   }
 })
+/*
 router.get('/scan.ejs', (req, res) => {
   try{
     res.redirect('/input.ejs')
+  } catch (err){
+    res.end(err)
+  }
+})
+*/
+router.get('/scan.ejs', (req, res) => {
+  try{
+    res.render('../views/pages/scan.ejs', {url: ['https://www.example.com/']})
   } catch (err){
     res.end(err)
   }
