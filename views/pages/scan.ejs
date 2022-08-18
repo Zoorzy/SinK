@@ -32,56 +32,54 @@
                   <% for(var i=0; i < url.length; i++) { %>
                     <div class="col-sm-12 col-xl-6">
                       <div class="bg-secondary rounded h-100 p-4">
-                        <input type="hidden" name="hiddenUrls" value="<%-url[i]%>">
-                        <h1>
-                          <%- url[i] %>
-                        </h1> <br />
-                        <div class="pg-bar mb-3">
-                          <div class="progress">
-                            <div class="progress-bar progress-bar-striped bg-success scanProgressBar" role="progressbar"
-                              aria-valuenow="" aria-valuemin="0" aria-valuemax="100"></div>
-                          </div>
-                        </div>
-                        <div class="m-n2">
-                          <button type="button" class="btn btn-outline-warning m-2 scanBtn" disabled>Downloading HTML .
-                            . .</button>
-                          <button type="button" class="btn btn-outline-info m-2 viewBtn" disabled>View Code</button>
-                          <button type="button" class="btn btn-outline-info m-2 downloadBtn" disabled><i class="fa fa-download"></i>Download
-                            Code</button>
-                        </div>
-                      </div>
-                    </div>
-
-                    <% } %>
-
-                      <script src="../../public/js/workersHandler.js"></script>
-
-                      <% } else { %>
-
-                        <div class="col-sm-12 col-xl-6">
-                          <div class="bg-secondary rounded h-100 p-4">
-                            <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                              <i class="fa fa-exclamation-circle me-2"></i>Ricordati di inserire degli url validi nel <a href="/input.ejs">form</a>
-                              <button type="button" class="btn-close" data-bs-dismiss="alert"
-                                aria-label="Close"></button>
+                        <form action="newreport.ejs" target="_blank" method="post">
+                          <h1>
+                            <%-url[i]%>
+                          </h1> <br />
+                          <div class="pg-bar mb-3">
+                            <div class="progress">
+                              <div class="progress-bar progress-bar-striped bg-success scanProgressBar"
+                                role="progressbar" aria-valuenow="" aria-valuemin="0" aria-valuemax="100"></div>
                             </div>
                           </div>
-                        </div>
-
-                        <% } %>
-
+                          <div class="m-n2">
+                            <input type="hidden" name="hiddenUrls" value="<%-url[i]%>">
+                            <button type="button" class="btn btn-outline-warning m-2 scanBtn" disabled
+                              onclick="submit()">Pinging server</button>
+                        </form>
+                      </div>
+                    </div>
               </div>
+
+              <% } %>
+
+                <script src="../../public/js/scanWorkersHandler.js"></script>
+
+                <% } else { %>
+
+                  <div class="col-sm-12 col-xl-6">
+                    <div class="bg-secondary rounded h-100 p-4">
+                      <div class="alert alert-warning" role="alert">
+                        <i class="fa fa-exclamation-circle me-2"></i>Ricordati di inserire degli url validi nel <a
+                          href="/input.ejs">form</a>
+                      </div>
+                    </div>
+                  </div>
+
+                  <% } %>
+
             </div>
-
-            <!-- Footer Start -->
-            <%- include("../partials/footer.ejs") %>
-              <!-- Footer End -->
         </div>
-        <!-- Content End -->
+
+        <!-- Footer Start -->
+        <%- include("../partials/footer.ejs") %>
+          <!-- Footer End -->
+  </div>
+  <!-- Content End -->
 
 
-        <!-- Back to Top -->
-        <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
+  <!-- Back to Top -->
+  <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
   </div>
 
   <!-- JavaScript Libraries -->

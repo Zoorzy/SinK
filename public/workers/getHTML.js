@@ -7,9 +7,10 @@ this.onmessage = e => {
   //Send the proper header information along with the request
   xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded')
 
-  xhttp.onreadystatechange = function () {//Call a function when the state changes.
-    if (xhttp.readyState == 4 && xhttp.status == 200) {
-      self.postMessage({id: e.data.id, html: xhttp.responseText})
+  xhttp.onreadystatechange = function () {
+
+    if (xhttp.readyState == 4 && xhttp.status) {
+      self.postMessage({ id: e.data.id, status: xhttp.status, html: xhttp.responseText })
     }
   }
   xhttp.send(params)

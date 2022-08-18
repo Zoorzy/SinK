@@ -1,0 +1,18 @@
+Trovare i tag html vulnerabili (input / select / ecc) => sinks
+Gestire i tag html come oggetti json (?)
+
+Trovare i parametri del link passato e modificarli per vedere come si riflettono
+
+sistemare attack schema
+
+source =/ sink
+
+per gestire lo scan delle pagine () => {
+  premendo il button scan di ogni pagina -> target="_blank"
+  ogni nuova tab si occuperà di scansionare la pagina (tramite DOM Manipulation) e di generare il report tramite un form da compilare (models -> Vulnerability.js)
+}
+
+newreport.js () => {
+  mappa con posizione del posto in cui è ostato il sito : https://ip-api.com/
+  select con i possibili vettori di attacco [ input | select | location | ... ]
+}

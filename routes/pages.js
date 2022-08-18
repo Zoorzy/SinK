@@ -1,25 +1,28 @@
 const express = require('express')
 const router = express.Router()
-const path = require('path')
+//const path = require('path')
 //const pages = path.join(__dirname, '..', 'views', 'pages')
+const example = 'https://www.example.com/'
 
 router.use(express.urlencoded({ extended: true }))
 router.use(express.json());
 
-router.get(['/', '/index.ejs'], (req, res) => {
+// dashboard
+router.get('/index.ejs', (req, res) => {
   try{
     res.render('../views/pages/index.ejs')
   } catch (err){
     res.end(err)
   }
 })
-router.get('/index.html', (req, res) => {
+router.get(['/index.html', '/'], (req, res) => {
   try{
     res.redirect('/index.ejs')
   } catch (err){
     res.end(err)
   }
 })
+// input.ejs
 router.get('/input.ejs', (req, res) => {
   try{
     res.render('../views/pages/input.ejs')
@@ -27,30 +30,38 @@ router.get('/input.ejs', (req, res) => {
     res.end(err)
   }
 })
+// scan.ejs
+router.get('/scan.ejs', (req, res) => {
+  try{
+    res.render('../views/pages/scan.ejs', {url: [example]})
+  } catch (err){
+    res.end(err)
+  }
+})
 router.post('/scan.ejs', (req, res) => {
   try{
-    //console.log(req.body)
     res.render('../views/pages/scan.ejs', {url: req.body.url})
   } catch (err){
     res.end(err)
   }
 })
-/*
-router.get('/scan.ejs', (req, res) => {
+
+// newreport.ejs
+router.get('/newreport.ejs', (req, res) => {
   try{
-    res.redirect('/input.ejs')
+    res.render('../views/pages/newreport.ejs', {url: [example]})
   } catch (err){
     res.end(err)
   }
 })
-*/
-router.get('/scan.ejs', (req, res) => {
+router.post('/newreport.ejs', (req, res) => {
   try{
-    res.render('../views/pages/scan.ejs', {url: ['https://www.example.com/']})
+    res.render('../views/pages/newreport.ejs', {url: req.body.hiddenUrls})
   } catch (err){
     res.end(err)
   }
 })
+
 router.get('/reports.ejs', (req, res) => {
   try{
     res.render('../views/pages/reports.ejs')
