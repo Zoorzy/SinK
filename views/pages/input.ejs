@@ -24,49 +24,36 @@
             <!-- Form Start -->
             <div class="container-fluid pt-4 px-4">
               <div class="row g-4">
-
                 <!-- Input Start -->
                 <div class="col-sm-12 col-xl-6">
                   <div class="bg-secondary rounded h-100 p-4">
-
                     <label for="urlFile">
                       <h6 class="mb-4">File Input</h6>
                     </label>
                     <div class="mb-3">
-                      <!--<label for="formFile" class="form-label">Carica i link target</label>-->
                       <input class="form-control bg-dark" type="file" id="urlFile">
                     </div>
-
                   </div>
                 </div>
                 <!-- Input End -->
-
                 <!-- Preview Start -->
                 <div class="col-sm-12 col-xl-6 preview">
                   <div class="bg-secondary rounded h-100 p-4">
                     <label for="previewContent">
                       <h6 class="mb-4">Editable Preview</h6>
                     </label>
-                    <textarea name="previewContent" id="previewContent" style="width: 100%" rows="6">https://www.example.com/</textarea>
+                    <textarea name="previewContent" id="previewContent" style="width: 100%"
+                      rows="6">https://www.example.com/</textarea>
                     <br />
                     <br />
-                    <form action="scan.ejs" method="post" name="scanform">
-
-                      <!-- Button Start -->
-                      <!--<div class="container-fluid pt-4 px-4">-->
-                      <!--<div class="row g-4">-->
-                      <!--<h6 class="mb-4">Basic Buttons</h6>-->
+                    <form action="ping.ejs" method="post" name="scanform">
                       <div class="m-n2">
                         <button type="button" class="btn btn-outline-danger m-2" onclick="post()">Next</button>
                       </div>
-                      <!--</div>-->
-                      <!--</div>-->
-                      <!-- Button End -->
                     </form>
                   </div>
                 </div>
                 <!-- Preview End -->
-
                 <script>
                   document.addEventListener("DOMContentLoaded", () => {
                     const previewContent = document.getElementById("previewContent")
@@ -88,7 +75,6 @@
                       }
                     }
                   })
-
                   /**
                    * sends a request to the specified url from a form. this will change the window location.
                    * @param {object} params the parameters to add to the url
@@ -96,35 +82,26 @@
                   function post() {
                     var params = document.getElementById('previewContent').value.split('\n'), urlObj
                     for (const key in params) {
-
                       urlObj = params[key]
-
                       if (params.hasOwnProperty(key) && isValidHttpUrl(urlObj)) {
-                        
                         const hiddenField = document.createElement('input');
                         hiddenField.type = 'hidden';
                         hiddenField.name = 'url[]';
                         hiddenField.value = urlObj
                         document.scanform.appendChild(hiddenField);
-                        
                       }
-
                     }
                     document.scanform.submit();
                   }
-
                   function isValidHttpUrl(string) {
                     let url;
-
                     try {
                       url = new URL(string);
                     } catch (err) {
                       return false;
                     }
-
                     return url.protocol === "http:" || url.protocol === "https:";
                   }
-
                 </script>
 
               </div>
@@ -136,7 +113,6 @@
               <!-- Footer End -->
         </div>
         <!-- Content End -->
-
 
         <!-- Back to Top -->
         <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
