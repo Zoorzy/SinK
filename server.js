@@ -3,17 +3,8 @@ const express = require('express')
 const app = express()
 const mongoose = require('mongoose')
 require('dotenv/config')
-//const cors = require('cors')
 const axios = require('axios')
 const port = 80
-
-/*
-app.use(
-  cors({
-    origin: `*`
-  })
-)
-*/
 
 app.use(compression())
 app.set('view engine', 'ejs');

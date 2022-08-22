@@ -31,16 +31,16 @@ router.get('/input.ejs', (req, res) => {
   }
 })
 // scan.ejs
-router.get('/scan.ejs', (req, res) => {
+router.get('/ping.ejs', (req, res) => {
   try{
-    res.render('../views/pages/scan.ejs', {url: [example]})
+    res.render('../views/pages/ping.ejs', {url: [example]})
   } catch (err){
     res.end(err)
   }
 })
-router.post('/scan.ejs', (req, res) => {
+router.post('/ping.ejs', (req, res) => {
   try{
-    res.render('../views/pages/scan.ejs', {url: req.body.url})
+    res.render('../views/pages/ping.ejs', {url: req.body.url})
   } catch (err){
     res.end(err)
   }

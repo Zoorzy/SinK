@@ -14,5 +14,5 @@ per gestire lo scan delle pagine () => {
 
 newreport.js () => {
   mappa con posizione del posto in cui è ostato il sito : https://ip-api.com/
-  select con i possibili vettori di attacco [ input | select | location | ... ]
+  checkbox con i possibili vettori di attacco [ input | select | location | ... ]
 }
