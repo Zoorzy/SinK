@@ -1,5 +1,6 @@
 http://fischiagram.altervista.org/
 https://www.corriereeeeeeeeee.it/
-https://www.corriere.it/
+https://developer.mozilla.org/en-US/
 https://www.repubblica.it/
 https://ilmanifesto.it/
+<script>alert()</script>

@@ -27,9 +27,44 @@
             <!-- Blank Start -->
             <div class="container-fluid pt-4 px-4">
               <div class="row vh-100 bg-secondary rounded align-items-center justify-content-center mx-0">
-                <div class="col-md-6 text-center">
-                  <h3>index.ejs</h3>
+
+
+                <div class="col-sm-12 col-xl-6">
+                  <div class="bg-secondary rounded h-100 p-4">
+                    <h1 class="mb-4">DOM XSS / Client XSS</h1>
+
+                    <div class="border rounded p-4 pb-0 mb-4">
+                      <figure class="text-center">
+                        <p>
+                          Throughout the history of Cross Site Scripting vulnerabilities, DOM or client side XSS has
+                          held a
+                          special place in the hearts of pentesters and developers alike. This variant of XSS is
+                          notoriously
+                          easy to miss using standard detection techniques and relatively easy to manifest in JS heavy
+                          applications.
+                          <br />
+                          <br />
+                          OWASP defines it as type of XSS where the attack payload is executed as a result of
+                          modifying the
+                          DOM
+                          environment in the victim’s browser used by the original client side script, so that the
+                          client side
+                          code runs in an “unexpected” manner. That is, the page itself (the HTTP response that is)
+                          does not
+                          change, but the client side code contained in the page executes differently due to the
+                          malicious
+                          modifications that have occurred in the DOM environment.
+                        </p>
+                        <figcaption class="blockquote-footer">
+                          <cite title="Source Title"><a
+                              href="https://blog.appsecco.com/automating-discovery-and-exploiting-dom-client-xss-vulnerabilities-using-sboxr-part-1-2e55c120c9e1">appsecco.com</a></cite>
+                        </figcaption>
+                      </figure>
+                    </div>
+
+                  </div>
                 </div>
+
               </div>
             </div>
             <!-- Blank End -->

@@ -48,7 +48,7 @@
                     <br />
                     <form action="ping.ejs" method="post" name="scanform">
                       <div class="m-n2">
-                        <button type="button" class="btn btn-outline-danger m-2" onclick="post()">Next</button>
+                        <button type="button" class="btn btn-outline-warning m-2" onclick="post()">Next</button>
                       </div>
                     </form>
                   </div>
@@ -67,11 +67,11 @@
                         previewContent.value = ""
                         var lines = evt.target.result.split('\n');
                         Array.prototype.slice.call(lines).forEach(element => {
-                          previewContent.value += element
+                          previewContent.value += String(element)
                         })
                       }
                       reader.onerror = function (evt) {
-                        previewContent.value = "error reading file: " + evt.target.error
+                        previewContent.value = "error reading file: " + String(evt.target.error)
                       }
                     }
                   })
