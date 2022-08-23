@@ -11,11 +11,9 @@
     <%- include("../partials/spinner.ejs") %>
       <!-- Spinner End -->
 
-
       <!-- Sidebar Start -->
       <%- include("../partials/sidebar.ejs") %>
         <!-- Sidebar End -->
-
 
         <!-- Content Start -->
         <div class="content">
@@ -23,12 +21,9 @@
           <%- include("../partials/navbar.ejs") %>
             <!-- Navbar End -->
 
-
             <div class="container-fluid pt-4 px-4">
               <div class="row g-4">
-
                 <% if(typeof url !=='undefined' ){ %>
-
                   <% for(var i=0; i < url.length; i++) { %>
                     <div class="col-sm-12 col-xl-6">
                       <div class="bg-secondary rounded h-100 p-4">
@@ -50,13 +45,9 @@
                       </div>
                     </div>
               </div>
-
               <% } %>
-
                 <script src="../../public/js/pingWorkersHandler.js"></script>
-
                 <% } else { %>
-
                   <div class="col-sm-12 col-xl-6">
                     <div class="bg-secondary rounded h-100 p-4">
                       <div class="alert alert-warning" role="alert">
@@ -65,9 +56,7 @@
                       </div>
                     </div>
                   </div>
-
                   <% } %>
-
             </div>
         </div>
 
@@ -77,14 +66,12 @@
   </div>
   <!-- Content End -->
 
-
   <!-- Back to Top -->
-  <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
+        <%- include("../partials/arrowup.ejs") %>
   </div>
 
   <!-- JavaScript Libraries -->
   <%- include("../partials/jslib.ejs") %>
-
     <!-- Template Javascript -->
     <%- include("../partials/template.ejs") %>
 </body>

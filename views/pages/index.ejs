@@ -11,11 +11,9 @@
     <%- include("../partials/spinner.ejs") %>
       <!-- Spinner End -->
 
-
       <!-- Sidebar Start -->
       <%- include("../partials/sidebar.ejs") %>
         <!-- Sidebar End -->
-
 
         <!-- Content Start -->
         <div class="content">
@@ -23,16 +21,12 @@
           <%- include("../partials/navbar.ejs") %>
             <!-- Navbar End -->
 
-
             <!-- Blank Start -->
             <div class="container-fluid pt-4 px-4">
               <div class="row vh-100 bg-secondary rounded align-items-center justify-content-center mx-0">
-
-
                 <div class="col-sm-12 col-xl-6">
                   <div class="bg-secondary rounded h-100 p-4">
                     <h1 class="mb-4">DOM XSS / Client XSS</h1>
-
                     <div class="border rounded p-4 pb-0 mb-4">
                       <figure class="text-center">
                         <p>
@@ -61,10 +55,8 @@
                         </figcaption>
                       </figure>
                     </div>
-
                   </div>
                 </div>
-
               </div>
             </div>
             <!-- Blank End -->
@@ -75,14 +67,12 @@
         </div>
         <!-- Content End -->
 
-
         <!-- Back to Top -->
-        <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
+        <%- include("../partials/arrowup.ejs") %>
   </div>
 
   <!-- JavaScript Libraries -->
   <%- include("../partials/jslib.ejs") %>
-
     <!-- Template Javascript -->
     <%- include("../partials/template.ejs") %>
 </body>
