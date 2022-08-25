@@ -1,26 +1,36 @@
-function scanHTML(sources, sinks) {
-  var textarea = document.getElementById('txthtml').value
-  getExternalJs(textarea)
-}
-function getExternalJs(txtString) {
-  //parse string to html
-  var html = new DOMParser().parseFromString(txtString, "text/xml");
-  //look for <script src="">
-  var scripts = html.getElementsByTagName('script'), srcUrl, worker, base = document.getElementById('url').value
-  console.log('base: ' + base)
-  Array.prototype.slice.call(scripts).forEach(element => {
-    if (element.hasAttribute('src')) {
-      //stucture a correct url
-      srcUrl = new URL(element.getAttribute('src'), base)
-      //download from url
-      worker = new Worker("../../public/workers/getHTML.js")
-      worker.onmessage = workerDone
-      worker.postMessage({ url: String(srcUrl) })
+(function () {
+  var sources, sinks
+
+  document.addEventListener('explodeJSDone', (e) => {
+    console.log(e.detail)
+    //sources defined
+    sources = ['document.location.href',
+      'document.location',
+      'window.location.href',
+      'window.location']
+    //sinks defined
+    sinks = ['$X.insertAdjacentHTML(...)',
+      '$X.innerHTML(...)',
+      '$X.innerHTML = ...']
+    //display sources and sinks
+    var patternSources = document.getElementById('pattern-sources')
+    for (var i = 0; i < sources.length; i++) {
+      var dd = document.createElement('dd')
+      dd.textContent = sources[i]
+      patternSources.appendChild(dd)
     }
+    var patternSinks = document.getElementById('pattern-sinks')
+    for (var i = 0; i < sinks.length; i++) {
+      var dd = document.createElement('dd')
+      dd.textContent = sinks[i]
+      patternSinks.appendChild(dd)
+    }
+
+    //create the code flow structure ..... todo!
+
+
+    //analyze sources and sinks ..... todo !
+
+
   })
-  function workerDone(e) {
-    console.log(e.data.html)
-    //concat with original html
-    
-  }
-}
+})();

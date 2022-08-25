@@ -16,3 +16,6 @@ newreport.js () => {
 }
 
 localstorage: le ultime n scansioni fatte
+
+sistemare explodeJS e scanHTML aka darle un ordine temporale da seguire e scriverle in modo più ordinato
+che senso ha mettere la gestione su sources e sinks dentro a newrepWorkersHandler.js? nessuno. Cambiala brutta testa di cazzo, gestiscilo in modo intelligente

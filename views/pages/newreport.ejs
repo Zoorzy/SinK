@@ -44,8 +44,8 @@
 
                   <div class="col-sm-12 col-xl-6">
                     <div class="bg-secondary rounded h-100 p-4">
-                      <h2 class="mb-4">HTML</h2>
-                      <textarea name="html" id="txthtml" style="width: 100%" rows="10"></textarea>
+                        <label for="txthtml"><h2 class="mb-4">HTML</h2></label>
+                        <textarea name="html" id="txthtml" style="width: 100%" rows="10"></textarea>
                       <button type="button" class="btn btn-outline-info m-2" id="copyBtn" disabled><i
                           class="fa fa-copy"></i> Copy</button>
                       <button type="button" class="btn btn-outline-info m-2" id="downloadBtn" disabled><i
@@ -121,7 +121,7 @@
                   </div>
                   <div class="col-sm-12 col-xl-6">
                     <div class="bg-secondary rounded h-100 p-4">
-                      <iframe src="" class="position-relative rounded w-100 h-100" id="map" frameborder="0"
+                      <iframe src="" class="position-relative rounded w-100 h-100" id="map" title="map" frameborder="0"
                         allowfullscreen="" aria-hidden="false" tabindex="0"
                         style="filter: grayscale(100%) invert(92%) contrast(83%); border: 0; min-height: 400px;"></iframe>
                     </div>
@@ -133,7 +133,7 @@
                     fetch('http://ip-api.com/json/' + url.host)
                       .then((response) => response.json())
                       .then((data) => {
-                        map.src = 'https://embed.waze.com/iframe?zoom=12&lat=' + data.lat + '&lon=' + data.lon
+                        map.src = 'https://embed.waze.com/iframe?zoom=10&lat=' + data.lat + '&lon=' + data.lon
                         document.getElementById('apiQuery').textContent = data.query
                         document.getElementById('apiStatus').textContent = data.status
                         document.getElementById('apiCountry').textContent = data.country
@@ -172,38 +172,20 @@
                   <div class="col-sm-12 col-xl-6">
                     <div class="bg-secondary rounded h-100 p-4">
                       <h1>What has been found</h1>
-                      <!--<dl class="row mb-0">
-                        <dt class="col-sm-3">Pattern-Sources</dt>
-                        <dd class="col-sm-9">
-                          <dl>
-                            <dd>document.location.href</dd>
-                            <dd>document.location</dd>
-                            <dd>window.location.href</dd>
-                            <dd>window.location</dd>
-                          </dl>
-                        </dd>
-                        <dt class="col-sm-3">Pattern-Sinks</dt>
-                        <dd class="col-sm-9">
-                          <dl>
-                            <dd>$X.insertAdjacentHTML(...)</dd>
-                            <dd>$X.innerHTML(...)</dd>
-                            <dd>$X.innerHTML = ...</dd>
-                          </dl>
-                        </dd>
-                      </dl>-->
                     </div>
                   </div>
                   <div class="col-sm-12 col-xl-6">
                     <div class="m-n2">
-                      <button type="button" class="btn btn-outline-warning m-2">Generate Report</button>
+                      <button type="button" class="btn btn-outline-warning m-2" id="newrepBtn">Generate Report</button>
                     </div>
                   </div>
 
                 </div>
               </div>
               <!-- Form End -->
-              <script src="../../public/js/scanHTML.js"></script>
               <script src="../../public/js/newrepWorkerHandler.js"></script>
+              <script src="../../public/js/explodeJS.js"></script>
+              <script src="../../public/js/scanHTML.js"></script>
             </form>
 
             <!-- Footer Start -->

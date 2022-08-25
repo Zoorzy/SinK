@@ -12,28 +12,7 @@
     document.getElementById('copyBtn').disabled = false
     document.getElementById('downloadBtn').disabled = false
     document.getElementById('viewBtn').disabled = false
-    getReadyToScan()
-  }
-  function getReadyToScan() {
-    sources = ['document.location.href',
-      'document.location',
-      'window.location.href',
-      'window.location']
-    sinks = ['$X.insertAdjacentHTML(...)',
-      '$X.innerHTML(...)',
-      '$X.innerHTML = ...']
-    var patternSources = document.getElementById('pattern-sources')
-    for (var i = 0; i < sources.length; i++) {
-      var dd = document.createElement('dd')
-      dd.textContent = sources[i]
-      patternSources.appendChild(dd)
-    }
-    var patternSinks = document.getElementById('pattern-sinks')
-    for (var i = 0; i < sinks.length; i++) {
-      var dd = document.createElement('dd')
-      dd.textContent = sinks[i]
-      patternSinks.appendChild(dd)
-    }
-    scanHTML(sources, sinks)
+
+    document.dispatchEvent(new Event('newrepWorkerHandlerDone'))
   }
 })();
