@@ -2,16 +2,15 @@
   var sources, sinks, worker
 
   document.addEventListener('explodeJSDone', (e) => {
-    console.log(e.detail)
+    //console.log(e.detail)
     //sources defined
     sources = ['document.location.href',
       'document.location',
       'window.location.href',
       'window.location']
     //sinks defined
-    sinks = ['$X.insertAdjacentHTML(...)',
-      '$X.innerHTML(...)',
-      '$X.innerHTML = ...']
+    sinks = ['insertAdjacentHTML(...)',
+      'innerHTML']
     //display sources and sinks
     var patternSources = document.getElementById('pattern-sources')
     for (var i = 0; i < sources.length; i++) {
@@ -29,10 +28,7 @@
     //revocer Abstract Sintax Tree .....
     worker = new Worker("../../public/workers/getResource.js")
     worker.onmessage = workerDone
-    worker.postMessage({ path:'/api/ASTParser', data:'var i = 0; i++; console.log(i);' })
-
-    //find sources and sinks ..... todo !
-
+    worker.postMessage({ path: '/api/ASTParser', data: 'var i = 0; i++; console.log(i);' })
 
     setProgressBar(0, 35)
   })
@@ -43,7 +39,8 @@
     progressBar.style.width = newprogress + "%"
   }
 
-  function workerDone(e){
+  function workerDone(e) {
     console.log(e.data.response)
+    //find sources and sinks ..... todo !
   }
 })();
