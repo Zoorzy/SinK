@@ -1,5 +1,5 @@
 (function () {
-  var sources, sinks
+  var sources, sinks, worker
 
   document.addEventListener('explodeJSDone', (e) => {
     console.log(e.detail)
@@ -26,11 +26,24 @@
       patternSinks.appendChild(dd)
     }
 
-    //create the code flow structure ..... todo!
+    //revocer Abstract Sintax Tree .....
+    worker = new Worker("../../public/workers/getResource.js")
+    worker.onmessage = workerDone
+    worker.postMessage({ path:'/api/ASTParser', data:'var i = 0; i++; console.log(i);' })
+
+    //find sources and sinks ..... todo !
 
 
-    //analyze sources and sinks ..... todo !
-
-
+    setProgressBar(0, 35)
   })
+
+  function setProgressBar(id, newprogress) {
+    var progressBar = document.getElementsByClassName('scanProgressBar')[id]
+    progressBar.ariaValueNow = newprogress
+    progressBar.style.width = newprogress + "%"
+  }
+
+  function workerDone(e){
+    console.log(e.data.response)
+  }
 })();

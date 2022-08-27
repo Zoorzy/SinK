@@ -1,7 +1,20 @@
 const express = require('express')
 const router = express.Router()
 const Vulnerability = require('../models/Vulnerability')
-//const bodyParser = require('body-parser')
+const acorn = require("acorn")
+const jsx = require("acorn-jsx")
+
+// RETURN AST FROM STRING
+router.post('/ASTParser', async (req, res) => {
+  try {
+    // Non funziona che ridere
+    const string = req.body.code
+    var JSXParser = acorn.Parser.extend(jsx())
+    res.json(JSXParser.parse(string, { ecmaVersion: 2020 }))
+  } catch (e) {
+    res.send(e)
+  }
+})
 
 // GET THE LAST 10 VULNERABILITIES REPORT
 router.get('/vuln', async (req, res) => {

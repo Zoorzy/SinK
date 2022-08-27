@@ -21,7 +21,7 @@ app.use(express.static('routes'))
 
 // PROXY SERVER TO PREVENT CORS WEB BROWSERS' POLICY
 app.post('/proxyServer', (req, res) => {
-  let endpoint = req.body.url
+  let endpoint = req.body.data
   axios
     .get(endpoint)
     .then(response => {

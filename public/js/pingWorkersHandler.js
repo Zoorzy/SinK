@@ -1,14 +1,14 @@
 (function () {
-  var n, worker, running;
-  var urls = []
+  var n, worker, running, urls = []
+
   for (const element of document.getElementsByName('hiddenUrls')) urls.push(element.value)
   if (typeof urls !== 'undefined') {
-    running = 0;
+    running = 0
     for (n = 0; n < urls.length; ++n) {
-      worker = new Worker("../../public/workers/getHTML.js");
-      worker.onmessage = workerDone;
-      worker.postMessage({ id: n, url: urls[n] });
-      ++running;
+      worker = new Worker("../../public/workers/getResource.js")
+      worker.onmessage = workerDone
+      worker.postMessage({ path: '/proxyServer', data: urls[n], id: n })
+      ++running
     }
   }
   function workerDone(e) {

@@ -32,16 +32,17 @@
           //stucture a correct url
           srcUrl = new URL(scriptArray[i].getAttribute('src'), base)
           //download from url
-          worker = new Worker("../../public/workers/getHTML.js")
+          worker = new Worker("../../public/workers/getResource.js")
           worker.onmessage = workerDone
-          worker.postMessage({ id: i, url: String(srcUrl) })
+          worker.postMessage({ path:'/proxyServer', data: String(srcUrl), id: i })
           ++running;
         }
       }
     } else {
       newrepBtn.textContent = "Generate Report"
       newrepBtn.disabled = false
-      document.dispatchEvent(new CustomEvent('explodeJSDone', {detail: htmlObject.documentElement}))
+      setProgressBar(0, 20)
+      document.dispatchEvent(new CustomEvent('explodeJSDone', { detail: htmlObject.documentElement }))
     }
   }
 
@@ -49,7 +50,7 @@
     --running;
     //concat with original html
     code = document.createElement('script')
-    code.append(e.data.html)
+    code.append(e.data.response)
     htmlObject.documentElement.getElementsByTagName('script')[e.data.id].after(code)
     htmlObject.documentElement.getElementsByTagName('script')[e.data.id].remove()
     //change the original html with the exploded one
@@ -57,7 +58,14 @@
       textarea.value = new XMLSerializer().serializeToString(htmlObject.documentElement)
       newrepBtn.textContent = "Generate Report"
       newrepBtn.disabled = false
-      document.dispatchEvent(new CustomEvent('explodeJSDone', {detail: htmlObject.documentElement}))
+      setProgressBar(0, 20)
+      document.dispatchEvent(new CustomEvent('explodeJSDone', { detail: htmlObject.documentElement }))
     }
+  }
+
+  function setProgressBar(id, newprogress) {
+    var progressBar = document.getElementsByClassName('scanProgressBar')[id]
+    progressBar.ariaValueNow = newprogress
+    progressBar.style.width = newprogress + "%"
   }
 })();

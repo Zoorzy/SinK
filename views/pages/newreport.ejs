@@ -28,6 +28,13 @@
 
                   <h1 class="mb-4">Generate Report</h1>
 
+                  <div class="pg-bar mb-3">
+                    <div class="progress">
+                      <div class="progress-bar progress-bar-striped bg-success scanProgressBar" role="progressbar" aria-valuenow=""
+                        aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                  </div>
+
                   <div class="col-sm-12 col-xl-6">
                     <div class="bg-secondary rounded h-100 p-4">
                       <div class="mb-3">
@@ -44,8 +51,10 @@
 
                   <div class="col-sm-12 col-xl-6">
                     <div class="bg-secondary rounded h-100 p-4">
-                        <label for="txthtml"><h2 class="mb-4">HTML</h2></label>
-                        <textarea name="html" id="txthtml" style="width: 100%" rows="10"></textarea>
+                      <label for="txthtml">
+                        <h2 class="mb-4">HTML</h2>
+                      </label>
+                      <textarea name="html" id="txthtml" style="width: 100%" rows="10"></textarea>
                       <button type="button" class="btn btn-outline-info m-2" id="copyBtn" disabled><i
                           class="fa fa-copy"></i> Copy</button>
                       <button type="button" class="btn btn-outline-info m-2" id="downloadBtn" disabled><i
