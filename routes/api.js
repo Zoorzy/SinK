@@ -1,21 +1,28 @@
 const express = require('express')
+var bodyParser = require('body-parser')
 const router = express.Router()
-const Vulnerability = require('../models/Vulnerability')
+//const Vulnerability = require('../models/Vulnerability')
 const acorn = require("acorn")
 const jsx = require("acorn-jsx")
 
-// RETURN AST FROM STRING
-router.post('/ASTParser', async (req, res) => {
+// create application/json parser
+//var jsonParser = bodyParser.json()
+// create application/x-www-form-urlencoded parser
+var urlencodedParser = bodyParser.urlencoded({ extended: false })
+
+// RETURN AST
+router.post('/ASTParser', urlencodedParser, async (req, res) => {
   try {
-    // Non funziona che ridere
-    const string = req.body.code
-    var JSXParser = acorn.Parser.extend(jsx())
-    res.json(JSXParser.parse(string, { ecmaVersion: 2020 }))
+    const JSXParser = acorn.Parser.extend(jsx())
+    const AST = JSXParser.parse(req.body.data, { ecmaVersion: 2020 })
+    //console.log(AST)
+    res.json(AST)
   } catch (e) {
     res.send(e)
   }
 })
 
+/*
 // GET THE LAST 10 VULNERABILITIES REPORT
 router.get('/vuln', async (req, res) => {
   try {
@@ -53,4 +60,5 @@ router.post('/new', bodyParser.json(), async (req, res) => {
   }
 })
 */
+
 module.exports = router;

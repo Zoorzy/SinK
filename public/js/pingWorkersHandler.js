@@ -7,7 +7,11 @@
     for (n = 0; n < urls.length; ++n) {
       worker = new Worker("../../public/workers/getResource.js")
       worker.onmessage = workerDone
-      worker.postMessage({ path: '/proxyServer', data: urls[n], id: n })
+      worker.postMessage({ 
+        path: '/proxyServer', 
+        data: urls[n], 
+        id: n 
+      })
       ++running
     }
   }

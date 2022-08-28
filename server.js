@@ -17,7 +17,7 @@ app.use('/api', require('./routes/api'))
 //localhost:8080/public
 app.use('/public', require('./routes/public'))
 
-app.use(express.static('routes'))
+//app.use(express.static('routes'))
 
 // PROXY SERVER TO PREVENT CORS WEB BROWSERS' POLICY
 app.post('/proxyServer', (req, res) => {
