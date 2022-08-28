@@ -1,5 +1,8 @@
 (function () {
-  var n, worker, running, urls = []
+  var n,
+    worker,
+    running,
+    urls = []
 
   for (const element of document.getElementsByName('hiddenUrls')) urls.push(element.value)
   if (typeof urls !== 'undefined') {
@@ -7,10 +10,10 @@
     for (n = 0; n < urls.length; ++n) {
       worker = new Worker("../../public/workers/getResource.js")
       worker.onmessage = workerDone
-      worker.postMessage({ 
-        path: '/proxyServer', 
-        data: urls[n], 
-        id: n 
+      worker.postMessage({
+        path: '/proxyServer',
+        data: urls[n],
+        id: n
       })
       ++running
     }
