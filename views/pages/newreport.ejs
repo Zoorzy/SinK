@@ -30,8 +30,8 @@
 
                   <div class="pg-bar mb-3">
                     <div class="progress">
-                      <div class="progress-bar progress-bar-striped bg-success scanProgressBar" role="progressbar" aria-valuenow=""
-                        aria-valuemin="0" aria-valuemax="100"></div>
+                      <div class="progress-bar progress-bar-striped bg-success scanProgressBar" role="progressbar"
+                        aria-valuenow="" aria-valuemin="0" aria-valuemax="100"></div>
                     </div>
                   </div>
 
@@ -135,35 +135,11 @@
                         style="filter: grayscale(100%) invert(92%) contrast(83%); border: 0; min-height: 400px;"></iframe>
                     </div>
                   </div>
-                  <script>
-                    //ip-api
-                    let url = new URL(document.getElementById('url').value);
-                    let map = document.getElementById('map')
-                    fetch('http://ip-api.com/json/' + url.host)
-                      .then((response) => response.json())
-                      .then((data) => {
-                        map.src = 'https://embed.waze.com/iframe?zoom=10&lat=' + data.lat + '&lon=' + data.lon
-                        document.getElementById('apiQuery').textContent = data.query
-                        document.getElementById('apiStatus').textContent = data.status
-                        document.getElementById('apiCountry').textContent = data.country
-                        document.getElementById('apiCountryCode').textContent = '(' + data.countryCode + ')'
-                        document.getElementById('apiRegion').textContent = data.region
-                        document.getElementById('apiRegionName').textContent = data.regionName
-                        document.getElementById('apiCity').textContent = data.city
-                        document.getElementById('apiZip').textContent = data.zip
-                        document.getElementById('apiLat').textContent = data.lat
-                        document.getElementById('apiLon').textContent = data.lon
-                        document.getElementById('apiTimezone').textContent = data.timezone
-                        document.getElementById('apiIsp').textContent = data.isp
-                        document.getElementById('apiOrg').textContent = data.org
-                        document.getElementById('apiAs').textContent = data.as
-                      });
-                  </script>
                   <!-- Position End -->
 
                   <div class="col-sm-12 col-xl-6">
                     <div class="bg-secondary rounded h-100 p-4">
-                      <h1>What has been analyzed</h1>
+                      <h1 class="mb-4">What has been analyzed</h1>
                       <dl class="row mb-0">
                         <dt class="col-sm-3">Pattern-Sources</dt>
                         <dd class="col-sm-9">
@@ -178,9 +154,74 @@
                       </dl>
                     </div>
                   </div>
-                  <div class="col-sm-12 col-xl-6">
+
+                  <div class="col-12">
                     <div class="bg-secondary rounded h-100 p-4">
                       <h1>What has been found</h1>
+                      <div class="accordion accordion-flush" id="accordionFlushExample">
+                        <!--<div class="accordion-item bg-transparent">
+                          <h2 class="accordion-header" id="flush-headingOne">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                              data-bs-target="#flush-collapseOne" aria-expanded="true"
+                              aria-controls="flush-collapseOne">
+                              Accordion Item #1
+                            </button>
+                          </h2>
+                          <div id="flush-collapseOne" class="accordion-collapse collapse show"
+                            aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                            <div class="accordion-body">
+                              Lorem et ea ea consetetur voluptua duo et aliquyam sanctus sit. Et dolore at erat amet et
+                              diam
+                              labore lorem dolores. Erat amet stet at dolore dolor ea invidunt, justo nonumy justo
+                              takimata
+                              magna. Stet lorem vero sed eos justo diam dolores, dolor sit takimata et voluptua aliquyam
+                              gubergren tempor.
+                            </div>
+                          </div>
+                        </div>
+                        <div class="accordion-item bg-transparent">
+                          <h2 class="accordion-header" id="flush-headingTwo">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                              data-bs-target="#flush-collapseTwo" aria-expanded="false"
+                              aria-controls="flush-collapseTwo">
+                              Accordion Item #2
+                            </button>
+                          </h2>
+                          <div id="flush-collapseTwo" class="accordion-collapse collapse"
+                            aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
+                            <div class="accordion-body">
+                              Sea diam dolore aliquyam aliquyam diam et consetetur et. Accusam amet no invidunt invidunt
+                              et
+                              consetetur, magna ut nonumy kasd erat tempor dolor et. Diam magna dolor sed amet duo
+                              dolores
+                              magna
+                              vero. Amet sit sadipscing ea diam clita lorem sit. Vero et et et tempor diam. Ipsum eirmod
+                              sit.
+                            </div>
+                          </div>
+                        </div>
+                        <div class="accordion-item bg-transparent">
+                          <h2 class="accordion-header" id="flush-headingThree">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                              data-bs-target="#flush-collapseThree" aria-expanded="false"
+                              aria-controls="flush-collapseThree">
+                              Accordion Item #3
+                            </button>
+                          </h2>
+                          <div id="flush-collapseThree" class="accordion-collapse collapse"
+                            aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
+                            <div class="accordion-body">
+                              Sea sea sit sanctus magna gubergren kasd, magna justo ea lorem lorem. Elitr aliquyam ipsum
+                              clita
+                              consetetur duo at nonumy invidunt, invidunt eos dolore vero sit amet amet magna tempor
+                              clita,
+                              takimata diam justo stet erat et vero erat. Sit ipsum eirmod sea ut vero dolores sea clita
+                              nonumy,
+                              no.
+                            </div>
+                          </div>
+                        </div>-->
+                      </div>
                     </div>
                   </div>
                   <div class="col-sm-12 col-xl-6">
@@ -192,6 +233,7 @@
                 </div>
               </div>
               <!-- Form End -->
+              <script src="../../public/js/ipApi.js"></script>
               <script src="../../public/js/newrepHandler.js"></script>
               <script src="../../public/js/scanHTML.js"></script>
             </form>

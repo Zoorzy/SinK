@@ -1,26 +1,20 @@
 const express = require('express')
-var bodyParser = require('body-parser')
 const router = express.Router()
 //const Vulnerability = require('../models/Vulnerability')
 const acorn = require("acorn")
-const jsx = require("acorn-jsx")
-
-// create application/json parser
-//var jsonParser = bodyParser.json()
-// create application/x-www-form-urlencoded parser
-var urlencodedParser = bodyParser.urlencoded({ extended: false })
 
 // RETURN AST
-router.post('/ASTParser', urlencodedParser, async (req, res) => {
+router.post('/ASTParser', async (req, res) => {
   try {
-    const JSXParser = acorn.Parser.extend(jsx())
-    const AST = JSXParser.parse(req.body.data, { ecmaVersion: 2020 })
+    for(var elem in req.body) console.log('- ' + elem)
+    const AST = acorn.parse(req.body.data, { ecmaVersion: 'latest' })
     //console.log(AST)
-    res.json(AST)
-  } catch (e) {
-    res.send(e)
+    res.send(AST)
+  } catch (err) {
+    res.status(500).send(err)
   }
 })
+
 
 /*
 // GET THE LAST 10 VULNERABILITIES REPORT

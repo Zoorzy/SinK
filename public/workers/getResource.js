@@ -6,7 +6,13 @@ this.onmessage = e => {
 
   xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded')
   xhttp.onreadystatechange = function () {
-    if (xhttp.readyState == 4 && xhttp.status) self.postMessage({ id: e.data.id, status: xhttp.status, response: xhttp.responseText })
+    if (xhttp.readyState == 4 && xhttp.status) {
+      self.postMessage({
+        id: e.data.id,
+        status: xhttp.status,
+        response: xhttp.responseText
+      })
+    }
   }
   xhttp.send(params)
 }

@@ -7,7 +7,6 @@
     js = []
 
   if (document.getElementById('url')) url = document.getElementById('url').value
-
   if (typeof url !== 'undefined') {
     // Se è definito l'url del report allora crea il webworker
     worker = new Worker("../../public/workers/getResource.js")
@@ -20,14 +19,11 @@
 
   function workerDone(e) {
     // Ho appena ricevuto da getResource.js il DOM ORIGINALE dal server web ospitante la pagina html
-
     newrepBtn = document.getElementById('newrepBtn')
     newrepBtn.textContent = 'Exploding JS'
     newrepBtn.disabled = 'disabled'
-
     // Download and Concat external js scripts
     getExternalJs(e.data.response)
-
     // Interaction buttons are now available
     document.getElementById('copyBtn').disabled = false
     document.getElementById('downloadBtn').disabled = false
@@ -37,32 +33,30 @@
   function getExternalJs(txthtml) {
     // parse string to html
     htmlObject = new DOMParser().parseFromString(txthtml, "text/html")
-
     // get <script> Nodes
     let srcUrl, scriptArray = htmlObject.documentElement.getElementsByTagName('script')
-
+    if (!scriptArray.length) explode()
+    // iterate throught the <sctipt> nodes array
     for (let i = 0; i < scriptArray.length; i++) {
-
       // get script tags with src attr
-      if (scriptArray[i].hasAttribute('src')) {
-        // stucture a correct url
-        if (!(srcUrl = new URL(scriptArray[i].getAttribute('src'), url))) break
-
-        // spawn a worker to download the external JS
-        worker = new Worker("../../public/workers/getResource.js")
-        worker.onmessage = appendJS
-        worker.postMessage({
-          path: '/proxyServer',
-          data: String(srcUrl),
-          id: i
-        })
-
-        ++running;
-      } else {
+      if (!scriptArray[i].hasAttribute('src')) {
         js.push(scriptArray[i].textContent)
+        continue
       }
+      // stucture a correct url
+      if (!(srcUrl = new URL(scriptArray[i].getAttribute('src'), url))) continue
+      // spawn a worker to download the external JS
+      worker = new Worker("../../public/workers/getResource.js")
+      worker.onmessage = appendJS
+      worker.postMessage({
+        path: '/proxyServer',
+        data: String(srcUrl),
+        id: i
+      })
+      ++running;
     }
   }
+
 
   function appendJS(e) {
     --running;
@@ -75,24 +69,25 @@
     htmlObject.documentElement.getElementsByTagName('script')[e.data.id].remove()
 
     // when the last worker ends its work
-    if (!running) {
-      // change the original html with the exploded one, parsed to string element
-      txthtml = new XMLSerializer().serializeToString(htmlObject.documentElement)
-      let textarea = document.getElementById('txthtml')
-      textarea.value = txthtml
+    if (!running) explode()
 
-      // update GUI status
-      setProgressBar(0, 20)
-      newrepBtn.textContent = "Generate Report"
-      newrepBtn.disabled = false
+  }
 
-      const JSexploded = new CustomEvent('JSexploded', {
-        detail: {
-          data: js
-        }
-      })
-      textarea.dispatchEvent(JSexploded)
-    }
+  function explode() {
+    // change the original html with the exploded one, parsed to string element
+    txthtml = new XMLSerializer().serializeToString(htmlObject.documentElement)
+    let textarea = document.getElementById('txthtml')
+    textarea.value = txthtml
+    // update GUI status
+    setProgressBar(0, 20)
+    newrepBtn.textContent = "Generate Report"
+    newrepBtn.disabled = false
+    const JSexploded = new CustomEvent('JSexploded', {
+      detail: {
+        data: js
+      }
+    })
+    textarea.dispatchEvent(JSexploded)
   }
 
   function setProgressBar(id, newprogress) {

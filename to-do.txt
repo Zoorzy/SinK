@@ -1,21 +1,11 @@
 Trovare i tag html vulnerabili (input / select / ecc) => sinks
-Gestire i tag html come oggetti json (?)
 
 Trovare i parametri del link passato e modificarli per vedere come si riflettono
 
 sistemare attack schema
 
-source =/ sink
-
-per gestire lo scan delle pagine () => {
-  ogni nuova tab si occuperà di scansionare la pagina (tramite DOM Manipulation) e di generare il report tramite un form da compilare (models -> Vulnerability.js)
-}
-
-newreport.js () => {
-  checkbox con i possibili vettori di attacco [ input | select | location | ... ]
-}
-
 localstorage: le ultime n scansioni fatte
 
-sistemare explodeJS e scanHTML aka darle un ordine temporale da seguire e scriverle in modo più ordinato
-che senso ha mettere la gestione su sources e sinks dentro a newrepWorkersHandler.js? nessuno. Cambiala brutta testa di cazzo, gestiscilo in modo intelligente
+
+
+PROBLEMONE ------> Quando invio la stringa da analizzare sembra spezzettarla in tante sotto elementi, prob in base al carattere di escape (")

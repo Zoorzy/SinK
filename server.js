@@ -1,23 +1,32 @@
 const compression = require('compression');
 const express = require('express')
+const bodyParser = require('body-parser')
 const app = express()
 const mongoose = require('mongoose')
 require('dotenv/config')
 const axios = require('axios')
 const port = 80
 
+// MIDDLEWARES
 app.use(compression())
-app.set('view engine', 'ejs');
+app.set('view engine', 'ejs')
+// Process application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({
+  limit: '50mb',
+  parameterLimit: 10000000,
+  extended: true 
+}))
+// Process application/json
+app.use(bodyParser.json())
+app.use(express.static('routes'))
 
 // IMPORT ROUTES
 //localhost:8080/
 app.use('/', require('./routes/pages'))
-//localhost:8080/api/attack
+//localhost:8080/api
 app.use('/api', require('./routes/api'))
 //localhost:8080/public
 app.use('/public', require('./routes/public'))
-
-//app.use(express.static('routes'))
 
 // PROXY SERVER TO PREVENT CORS WEB BROWSERS' POLICY
 app.post('/proxyServer', (req, res) => {
