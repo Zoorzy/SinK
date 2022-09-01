@@ -6,6 +6,4 @@ sistemare attack schema
 
 localstorage: le ultime n scansioni fatte
 
-
-
 PROBLEMONE ------> Quando invio la stringa da analizzare sembra spezzettarla in tante sotto elementi, prob in base al carattere di escape (")

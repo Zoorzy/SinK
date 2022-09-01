@@ -1,22 +1,21 @@
 (function () {
-  var sources, sinks, worker, running = 0
-
-  document.getElementById('txthtml').addEventListener('JSexploded', (e) => {
-    // sources defined
+  var worker,
+    running = 0,
     sources = [
       'document.location.href',
       'document.location',
       'document.cookie',
       'window.location.href',
       'window.location'
-    ]
-    // sinks defined
+    ],
     sinks = [
       'insertAdjacentHTML(...)',
       'innerHTML',
       'document.write',
       'document.writeln'
     ]
+
+  document.getElementById('txthtml').addEventListener('JSexploded', (e) => {
     // display sources and sinks
     var patternSources = document.getElementById('pattern-sources')
     for (var i = 0; i < sources.length; i++) {
@@ -38,7 +37,15 @@
 
     // iterate throught every JSexploded string
     for (let i = 0; i < e.detail.data.length; i++) {
-      //recover Abstract Sintax Tree .....
+      // Remove comments
+      //e.detail.data[i] = e.detail.data[i].replace(/\/\*[\s\S]*?\*\/|^(?!.*(http?:|https?:))\/\/.*/g, '')
+      // Remove new lines
+      //e.detail.data[i] = e.detail.data[i].replace(/(\r\n|\n|\r)/gm, '')
+      // Remove blank spaces
+      //e.detail.data[i] = e.detail.data[i].replace(/\s/g, '')
+      // Replace double quotes to single quotes
+      //e.detail.data[i] = e.detail.data[i].replace(/"/g, "'")
+      // Recover Abstract Sintax Tree .....
       worker = new Worker("../../public/workers/getResource.js")
       worker.onmessage = analyze
       worker.postMessage({
@@ -52,14 +59,18 @@
 
   function analyze(e) {
     --running
-    //find sources and sinks ..... todo !
-
     if (e.data.status !== 200) return
 
-    const AST = e.data.response
+    //find sources and sinks ..... todo !
+
+    const AST = JSON.parse(e.data.response)
+    if (!AST.type) return
+
     /* Create a Visitor object and use it to traverse the AST */
-    var visitor = new Visitor()
+    //var visitor = new Visitor()
     //visitor.visitNodes(AST)
+
+    console.log(AST)
 
     // when the last worker ends its work
     if (running === 0) {
@@ -68,12 +79,14 @@
   }
 
 
+
+
+
   class Visitor {
     /* Deal with nodes in an array */
     visitNodes(nodes) {
-      for (const node of nodes) {
-        console.log(this.visitNode(node) + '')
-      }
+      this.visitNode(nodes)
+      //console.log(typeof nodes)
     }
     /* Dispatch each type of node to a function */
     visitNode(node) {

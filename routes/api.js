@@ -2,13 +2,12 @@ const express = require('express')
 const router = express.Router()
 //const Vulnerability = require('../models/Vulnerability')
 const acorn = require("acorn")
+const JSX = require('acorn-jsx')
 
 // RETURN AST
 router.post('/ASTParser', async (req, res) => {
   try {
-    for(var elem in req.body) console.log('- ' + elem)
     const AST = acorn.parse(req.body.data, { ecmaVersion: 'latest' })
-    //console.log(AST)
     res.send(AST)
   } catch (err) {
     res.status(500).send(err)

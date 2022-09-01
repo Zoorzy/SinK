@@ -22,7 +22,7 @@
     newrepBtn = document.getElementById('newrepBtn')
     newrepBtn.textContent = 'Exploding JS'
     newrepBtn.disabled = 'disabled'
-    // Download and Concat external js scripts
+    // Download and Concat external js scripts linked inside the original html
     getExternalJs(e.data.response)
     // Interaction buttons are now available
     document.getElementById('copyBtn').disabled = false
@@ -35,16 +35,21 @@
     htmlObject = new DOMParser().parseFromString(txthtml, "text/html")
     // get <script> Nodes
     let srcUrl, scriptArray = htmlObject.documentElement.getElementsByTagName('script')
+    // call explode if there are no external scripts to download
     if (!scriptArray.length) explode()
     // iterate throught the <sctipt> nodes array
     for (let i = 0; i < scriptArray.length; i++) {
       // get script tags with src attr
-      if (!scriptArray[i].hasAttribute('src')) {
+      if (!(scriptArray[i].hasAttribute('src'))) {
         js.push(scriptArray[i].textContent)
         continue
       }
+      let path = scriptArray[i].getAttribute('src')
+      // avoid analyze some known public scripts
+      if (path.includes('bootstrap')) continue
+      if (path.includes('jquery')) continue
       // stucture a correct url
-      if (!(srcUrl = new URL(scriptArray[i].getAttribute('src'), url))) continue
+      if (!(srcUrl = new URL(path, url))) continue
       // spawn a worker to download the external JS
       worker = new Worker("../../public/workers/getResource.js")
       worker.onmessage = appendJS
@@ -57,20 +62,28 @@
     }
   }
 
-
   function appendJS(e) {
     --running;
-    //push into js array to analyze later
-    js.push(e.data.response)
-    //concat with original html
-    let code = document.createElement('script')
-    code.append(e.data.response)
-    htmlObject.documentElement.getElementsByTagName('script')[e.data.id].after(code)
-    htmlObject.documentElement.getElementsByTagName('script')[e.data.id].remove()
-
+    // Avoid appending too large scripts
+    if ((new TextEncoder().encode(e.data.response)).length <= 10000) {
+      // Remove comments
+      e.data.response = e.data.response.replace(/\/\*[\s\S]*?\*\/|^(?!.*(http?:|https?:))\/\/.*/g, '')
+      // Remove new lines
+      e.data.response = e.data.response.replace(/(\r\n|\n|\r)/gm, '')
+      // Remove blank spaces
+      e.data.response = e.data.response.replace(/\s/g, '')
+      // Replace double quotes to single quotes
+      e.data.response = e.data.response.replace(/"/g, "'")
+      //push into js array to analyze later
+      js.push(e.data.response)
+      //concat with original html
+      let code = document.createElement('script')
+      code.append(e.data.response)
+      htmlObject.documentElement.getElementsByTagName('script')[e.data.id].after(code)
+      htmlObject.documentElement.getElementsByTagName('script')[e.data.id].remove()
+    }
     // when the last worker ends its work
-    if (!running) explode()
-
+    if (running == 0) explode()
   }
 
   function explode() {
