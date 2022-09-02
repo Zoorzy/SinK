@@ -7,6 +7,7 @@ const JSX = require('acorn-jsx')
 // RETURN AST
 router.post('/ASTParser', async (req, res) => {
   try {
+    //console.log('Server received: ' + req.body.data)
     const AST = acorn.parse(req.body.data, { ecmaVersion: 'latest' })
     res.send(AST)
   } catch (err) {

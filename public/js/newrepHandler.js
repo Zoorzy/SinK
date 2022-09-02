@@ -4,7 +4,8 @@
     running = 0,
     htmlObject,
     newrepBtn,
-    js = []
+    js = [],
+    explodedAtLeastOne = false
 
   if (document.getElementById('url')) url = document.getElementById('url').value
   if (typeof url !== 'undefined') {
@@ -35,8 +36,6 @@
     htmlObject = new DOMParser().parseFromString(txthtml, "text/html")
     // get <script> Nodes
     let srcUrl, scriptArray = htmlObject.documentElement.getElementsByTagName('script')
-    // call explode if there are no external scripts to download
-    if (!scriptArray.length) explode()
     // iterate throught the <sctipt> nodes array
     for (let i = 0; i < scriptArray.length; i++) {
       // get script tags with src attr
@@ -46,8 +45,8 @@
       }
       let path = scriptArray[i].getAttribute('src')
       // avoid analyze some known public scripts
-      if (path.includes('bootstrap')) continue
-      if (path.includes('jquery')) continue
+      //if (path.includes('bootstrap')) continue
+      //if (path.includes('jquery')) continue
       // stucture a correct url
       if (!(srcUrl = new URL(path, url))) continue
       // spawn a worker to download the external JS
@@ -58,22 +57,17 @@
         data: String(srcUrl),
         id: i
       })
+      explodedAtLeastOne = true
       ++running;
     }
+    // Se per qualsiasi motivo (nessuno script da scaricare, solo script interni ecc) allora procedi direttamente a fare explode()
+    if (!explodedAtLeastOne) explode()
   }
 
   function appendJS(e) {
     --running;
     // Avoid appending too large scripts
     if ((new TextEncoder().encode(e.data.response)).length <= 10000) {
-      // Remove comments
-      e.data.response = e.data.response.replace(/\/\*[\s\S]*?\*\/|^(?!.*(http?:|https?:))\/\/.*/g, '')
-      // Remove new lines
-      e.data.response = e.data.response.replace(/(\r\n|\n|\r)/gm, '')
-      // Remove blank spaces
-      e.data.response = e.data.response.replace(/\s/g, '')
-      // Replace double quotes to single quotes
-      e.data.response = e.data.response.replace(/"/g, "'")
       //push into js array to analyze later
       js.push(e.data.response)
       //concat with original html
