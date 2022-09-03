@@ -37,18 +37,13 @@
 
     // iterate throught every JSexploded string
     for (let i = 0; i < e.detail.data.length; i++) {
-
       var elem = e.detail.data[i]
-      
-
       // Remove comments
-      elem = elem.replace(/\/\*[\s\S]*?\*\/|^(?!.*(http?:|https?:))\/\/.*/g, '');
+      elem = elem.replace(/\/\*[\s\S]*?\*\/|([^:]|^)\/\/.*$/gm, '');
       // Remove new lines
       elem = elem.replace(/(\r\n|\n|\r)/gm, '');
-      // Remove tabs
-      elem = elem.replace(/\t+/g, '');
-      // Remove blank spaces
-      //elem = elem.replace(/\s+/g, ''); // --> var pos --> varpos
+      // Remove spaces inside other spaces
+      elem = elem.replace(/\s\s+/g, ' ');
 
       // Recover Abstract Sintax Tree .....
       worker = new Worker("../../public/workers/getResource.js");
@@ -64,20 +59,19 @@
 
   function analyze(e) {
     --running;
-    if (e.data.status !== 200) {
-      //console.log(e.data.id + ': ' + e.data.status + ': ' + e.data.response);
-      return;
-    }
+    if (e.data.status !== 200) return;
+
     //find sources and sinks ..... todo !
 
     const AST = JSON.parse(e.data.response);
     if (!AST.type) return;
 
     /* Create a Visitor object and use it to traverse the AST */
-    //var visitor = new Visitor();
-    //visitor.visitNodes(AST);
+    var visitor = new Visitor();
+    var res = visitor.visitNodes(AST);
 
-    console.log(AST);
+    console.log('AST: ' + AST);
+    console.log('res: ' + res);
 
     // when the last worker ends its work
     //if (running === 0) {

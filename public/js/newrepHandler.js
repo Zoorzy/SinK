@@ -44,9 +44,6 @@
         continue
       }
       let path = scriptArray[i].getAttribute('src')
-      // avoid analyze some known public scripts
-      //if (path.includes('bootstrap')) continue
-      //if (path.includes('jquery')) continue
       // stucture a correct url
       if (!(srcUrl = new URL(path, url))) continue
       // spawn a worker to download the external JS

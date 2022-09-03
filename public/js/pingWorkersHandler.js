@@ -13,8 +13,7 @@
       worker.postMessage({
         path: '/proxyServer',
         data: urls[n],
-        id: n,
-        method: 'application/x-www-form-urlencoded'
+        id: n
       })
       ++running
     }
