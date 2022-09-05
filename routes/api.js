@@ -1,19 +1,83 @@
 const express = require('express')
 const router = express.Router()
 //const Vulnerability = require('../models/Vulnerability')
-const acorn = require("acorn")
-const JSX = require('acorn-jsx')
+const { parse } = require("@babel/parser");
+const traverse = require("@babel/traverse").default;
 
 // RETURN AST
-router.post('/ASTParser', async (req, res) => {
+router.post('/ASTScanner', async (req, res) => {
+  var sources = [
+    'document.location.href',
+    'document.location',
+    'document.cookie',
+    'window.location.href',
+    'window.location'
+  ],
+    sinks = [
+      'write',
+      'writeln',
+      'insertAdjacentHTML',
+      'innerHTML'
+    ];
   try {
-    //console.log('Server received:\n' + req.body.data)
-    const AST = acorn.parse(req.body.data, { ecmaVersion: 'latest' }).body
-    //console.log('and produced AST: ')
-    //console.log(AST)
-    res.send(AST)
+    const AST = parse(req.body.data);
+
+    //console.log(AST.program.body);
+
+    //var txt = '';
+    traverse(AST, {
+      /*
+      VariableDeclaration(path) {
+        //txt += path.node.kind + ', ';
+        console.log('VariableDeclaration: ' + path.node.kind);
+      },
+      NumericLiteral(path) {
+        //txt += path.node.value + ', ';
+        console.log('NumericLiteral: ' + path.node.value);
+      },
+      StringLiteral(path) {
+        //txt += path.node.value + ', ';
+        console.log('StringLiteral: ' + path.node.value);
+      },
+      Identifier(path) {
+        //txt += path.node.name + ', ';
+        for (elem of sinks) {
+          if (path.node.name == elem) {
+            console.log('Identifier: ' + path.node.name);
+          }
+        }
+      },
+      VariableDeclarator(path) {
+        //console.log('VariableDeclarator: ' + path.node.id.name);
+      },
+      BinaryExpression(path) {
+        //txt += path.node.operator + ', ';
+        console.log(path.node.operator);
+      },
+      FunctionDeclaration(path) {
+        console.log(path.node.body.body)
+      },
+      AssignmentExpression(path) {
+        console.log(path.node.right)
+      },
+      */
+
+      enter(path) {
+        sinks.forEach(element => {
+          if (path.isIdentifier({ name: element })) {
+            console.log('trovato ' + element + '!');
+            console.log(path.node);
+          }
+        });
+      }
+
+    });
+
+    //console.log('This is txt content: ' + txt);
+
+    res.status(200).send(AST)
   } catch (err) {
-    res.status(500).send(err)
+    res.status(500).send(err);
   }
 })
 

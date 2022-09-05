@@ -1,9 +1,11 @@
-Trovare i tag html vulnerabili (input / select / ecc) => sinks
-
-Trovare i parametri del link passato e modificarli per vedere come si riflettono
+Trovare i parametri del link passato e modificarli per vedere come si riflettono --> naaah
 
 sistemare attack schema
 
 localstorage: le ultime n scansioni fatte
 
-PROBLEMONE ------> Quando invio la stringa da analizzare sembra spezzettarla in tante sotto elementi, prob in base al carattere di escape (")
+salvare su mongodb il report
+
+api (già in parte strutturate) per il read da db delle report precedenti
+
+capire se innerHTML / write ecc hanno come parametri variabili user-modificabili

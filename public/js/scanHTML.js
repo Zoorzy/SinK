@@ -1,28 +1,30 @@
 (function () {
   var worker,
     running = 0,
-    sources = [
+    /*sources = [
       'document.location.href',
       'document.location',
       'document.cookie',
       'window.location.href',
       'window.location'
-    ],
+    ],*/
     sinks = [
-      'insertAdjacentHTML(...)',
-      'innerHTML',
-      'document.write',
-      'document.writeln'
+      'x.write',
+      //'x.writeln',
+      //'x.insertAdjacentHTML(...)',
+      //'x.innerHTML'
     ];
 
   document.getElementById('txthtml').addEventListener('JSexploded', (e) => {
     // display sources and sinks
+    /*
     var patternSources = document.getElementById('pattern-sources');
     for (var i = 0; i < sources.length; i++) {
       var dd = document.createElement('dd');
       dd.textContent = sources[i];
       patternSources.appendChild(dd);
     }
+    */
     var patternSinks = document.getElementById('pattern-sinks');
     for (var i = 0; i < sinks.length; i++) {
       var dd = document.createElement('dd');
@@ -42,14 +44,14 @@
       elem = elem.replace(/\/\*[\s\S]*?\*\/|([^:]|^)\/\/.*$/gm, '');
       // Remove new lines
       elem = elem.replace(/(\r\n|\n|\r)/gm, '');
-      // Remove spaces inside other spaces
+      // Remove repetitive spaces
       elem = elem.replace(/\s\s+/g, ' ');
 
       // Recover Abstract Sintax Tree .....
       worker = new Worker("../../public/workers/getResource.js");
-      worker.onmessage = analyze;
+      worker.onmessage = scan;
       worker.postMessage({
-        path: '/api/ASTParser',
+        path: '/api/ASTScanner',
         data: window.encodeURIComponent(elem),
         id: i
       });
@@ -57,73 +59,12 @@
     }
   });
 
-  function analyze(e) {
+  async function scan(e) {
     --running;
     if (e.data.status !== 200) return;
-
-    //find sources and sinks ..... todo !
-
     const AST = JSON.parse(e.data.response);
-    if (!AST.type) return;
-
-    /* Create a Visitor object and use it to traverse the AST */
-    var visitor = new Visitor();
-    var res = visitor.visitNodes(AST);
-
-    console.log('AST: ' + AST);
-    console.log('res: ' + res);
-
-    // when the last worker ends its work
-    //if (running === 0) {
-
-    //}
+    //console.log(AST)
   }
-
-
-
-
-
-  class Visitor {
-    /* Deal with nodes in an array */
-    visitNodes(nodes) {
-      this.visitNode(nodes);
-      //console.log(typeof nodes)
-    }
-    /* Dispatch each type of node to a function */
-    visitNode(node) {
-      switch (node.type) {
-        case 'Program':
-          return this.visitProgram(node);
-        case 'VariableDeclaration':
-          return this.visitVariableDeclaration(node);
-        case 'VariableDeclarator':
-          return this.visitVariableDeclarator(node);
-        case 'Identifier':
-          return this.visitIdentifier(node);
-        case 'Literal':
-          return this.visitLiteral(node);
-      }
-    }
-    /* Functions to deal with each type of node */
-    visitProgram(node) {
-      return this.visitNodes(node.body);
-    }
-    visitVariableDeclaration(node) {
-      return this.visitNodes(node.declarations);
-    }
-    visitVariableDeclarator(node) {
-      this.visitNode(node.id);
-      return this.visitNode(node.init);
-    }
-    visitIdentifier(node) {
-      return node.name;
-    }
-    visitLiteral(node) {
-      return node.value;
-    }
-  }
-
-
 
   function end(data) {
     var parent = document.getElementById('accordionFlushExample');
