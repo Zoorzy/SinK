@@ -11,7 +11,7 @@ router.post('/ASTScanner', async (req, res) => {
     'writeln',
     'insertAdjacentHTML',
     'innerHTML'
-  ];
+  ], vulns = [];
   try {
     const AST = parse(req.body.data);
     traverse(AST, {
@@ -19,13 +19,13 @@ router.post('/ASTScanner', async (req, res) => {
         sinks.forEach(element => {
           if (path.isIdentifier({ name: element })) {
             // Ho trovato un sinks, non importa che sia davvero manipolabile a mio piacere
-            console.log(path.node);
+            vulns.push(path.node);
           }
         });
       }
     });
 
-    res.status(200).send(AST)
+    res.status(200).send(vulns)
   } catch (err) {
     res.status(500).send(err);
   }

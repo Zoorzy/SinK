@@ -3,7 +3,6 @@ this.onmessage = e => {
   var url = 'http://localhost:80' + e.data.path
   var params = 'data=' + e.data.data
   xhttp.open('POST', url, true)
-  //console.log('Client sending to ' + e.data.path + ': ' + params)
 
   xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded')
   xhttp.onreadystatechange = function () {

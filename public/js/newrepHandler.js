@@ -35,7 +35,7 @@
     // parse string to html
     htmlObject = new DOMParser().parseFromString(txthtml, "text/html")
     // get <script> Nodes
-    let srcUrl, scriptArray = htmlObject.documentElement.getElementsByTagName('script')
+    let scriptArray = htmlObject.documentElement.getElementsByTagName('script')
     // iterate throught the <sctipt> nodes array
     for (let i = 0; i < scriptArray.length; i++) {
       // get script tags with src attr
@@ -80,7 +80,7 @@
   function explode() {
     // change the original html with the exploded one, parsed to string element
     txthtml = new XMLSerializer().serializeToString(htmlObject.documentElement)
-    let textarea = document.getElementById('txthtml')
+    let srcUrl, textarea = document.getElementById('txthtml')
     textarea.value = txthtml
     // update GUI status
     setProgressBar(0, 20)
