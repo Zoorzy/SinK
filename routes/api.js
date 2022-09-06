@@ -6,74 +6,24 @@ const traverse = require("@babel/traverse").default;
 
 // RETURN AST
 router.post('/ASTScanner', async (req, res) => {
-  var sources = [
-    'document.location.href',
-    'document.location',
-    'document.cookie',
-    'window.location.href',
-    'window.location'
-  ],
-    sinks = [
-      'write',
-      'writeln',
-      'insertAdjacentHTML',
-      'innerHTML'
-    ];
+  var sinks = [
+    'write',
+    'writeln',
+    'insertAdjacentHTML',
+    'innerHTML'
+  ];
   try {
     const AST = parse(req.body.data);
-
-    //console.log(AST.program.body);
-
-    //var txt = '';
     traverse(AST, {
-      /*
-      VariableDeclaration(path) {
-        //txt += path.node.kind + ', ';
-        console.log('VariableDeclaration: ' + path.node.kind);
-      },
-      NumericLiteral(path) {
-        //txt += path.node.value + ', ';
-        console.log('NumericLiteral: ' + path.node.value);
-      },
-      StringLiteral(path) {
-        //txt += path.node.value + ', ';
-        console.log('StringLiteral: ' + path.node.value);
-      },
-      Identifier(path) {
-        //txt += path.node.name + ', ';
-        for (elem of sinks) {
-          if (path.node.name == elem) {
-            console.log('Identifier: ' + path.node.name);
-          }
-        }
-      },
-      VariableDeclarator(path) {
-        //console.log('VariableDeclarator: ' + path.node.id.name);
-      },
-      BinaryExpression(path) {
-        //txt += path.node.operator + ', ';
-        console.log(path.node.operator);
-      },
-      FunctionDeclaration(path) {
-        console.log(path.node.body.body)
-      },
-      AssignmentExpression(path) {
-        console.log(path.node.right)
-      },
-      */
-
       enter(path) {
         sinks.forEach(element => {
           if (path.isIdentifier({ name: element })) {
-            console.log('trovato ' + element + '!');
+            // Ho trovato un sinks, non importa che sia davvero manipolabile a mio piacere
             console.log(path.node);
           }
         });
       }
-
     });
-
-    //console.log('This is txt content: ' + txt);
 
     res.status(200).send(AST)
   } catch (err) {

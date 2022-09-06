@@ -10,9 +10,9 @@
     ],*/
     sinks = [
       'x.write',
-      //'x.writeln',
-      //'x.insertAdjacentHTML(...)',
-      //'x.innerHTML'
+      'x.writeln',
+      'x.insertAdjacentHTML(...)',
+      'x.innerHTML'
     ];
 
   document.getElementById('txthtml').addEventListener('JSexploded', (e) => {

@@ -38,7 +38,6 @@ app.post('/proxyServer', (req, res) => {
       res.send(response.data)
     })
     .catch(err => {
-      //res.json(err)
       res.status(404).send()
     })
 })
