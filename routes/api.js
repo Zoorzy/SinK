@@ -13,6 +13,7 @@ router.post('/ASTScanner', async (req, res) => {
     'innerHTML'
   ], vulns = [];
   try {
+    console.log(req.body)
     const AST = parse(req.body.data);
     traverse(AST, {
       enter(path) {
@@ -25,12 +26,20 @@ router.post('/ASTScanner', async (req, res) => {
       }
     });
 
+
+    //const Identifier = new Identifier({
+    //title: req.body.title,
+    //description: req.body.description,
+    //url: req.body.url
+    //})
+
+    //const saved = await Identifier.save();
+
     res.status(200).send(vulns)
   } catch (err) {
     res.status(500).send(err);
   }
 })
-
 
 /*
 // GET THE LAST 10 VULNERABILITIES REPORT

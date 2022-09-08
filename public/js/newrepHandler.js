@@ -22,13 +22,12 @@
     // Ho appena ricevuto da getResource.js il DOM ORIGINALE dal server web ospitante la pagina html
     newrepBtn = document.getElementById('newrepBtn')
     newrepBtn.textContent = 'Exploding JS'
-    newrepBtn.disabled = 'disabled'
     // Download and Concat external js scripts linked inside the original html
     getExternalJs(e.data.response)
     // Interaction buttons are now available
     document.getElementById('copyBtn').disabled = false
-    document.getElementById('downloadBtn').disabled = false
-    document.getElementById('viewBtn').disabled = false
+    //document.getElementById('downloadBtn').disabled = false
+    //document.getElementById('viewBtn').disabled = false
   }
 
   function getExternalJs(txthtml) {
@@ -80,15 +79,16 @@
   function explode() {
     // change the original html with the exploded one, parsed to string element
     txthtml = new XMLSerializer().serializeToString(htmlObject.documentElement)
-    let srcUrl, textarea = document.getElementById('txthtml')
+    let textarea = document.getElementById('txthtml')
     textarea.value = txthtml
     // update GUI status
     setProgressBar(0, 20)
-    newrepBtn.textContent = "Generate Report"
-    newrepBtn.disabled = false
+    newrepBtn.textContent = "See reports"
+    newrepBtn.disabled = false;
     const JSexploded = new CustomEvent('JSexploded', {
       detail: {
-        data: js
+        data: js,
+        targetUrl: url
       }
     })
     textarea.dispatchEvent(JSexploded)
@@ -99,4 +99,10 @@
     progressBar.ariaValueNow = newprogress
     progressBar.style.width = newprogress + "%"
   }
+
+  //copy button
+  document.getElementById("copyBtn").addEventListener('click', () => {
+    document.getElementById("txthtml").select()
+    document.execCommand('copy')
+  })
 })();
