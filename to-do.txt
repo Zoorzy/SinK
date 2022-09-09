@@ -1,5 +1,7 @@
 localstorage: le ultime n scansioni fatte
 
-salvare su mongodb il report
+--- salvare su mongodb il report
+mi stampa 2/3 volte lo stesso report sul sito su localhost boh idk why
 
 api (già in parte strutturate) per il read da db delle report precedenti
+

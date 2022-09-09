@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-//const Vulnerability = require('../models/Vulnerability')
+const Schema = require('../models/Schema')
 const { parse } = require("@babel/parser");
 const traverse = require("@babel/traverse").default;
 
@@ -13,29 +13,43 @@ router.post('/ASTScanner', async (req, res) => {
     'innerHTML'
   ], vulns = [];
   try {
-    console.log(req.body)
     const AST = parse(req.body.data);
     traverse(AST, {
       enter(path) {
         sinks.forEach(element => {
           if (path.isIdentifier({ name: element })) {
             // Ho trovato un sinks, non importa che sia davvero manipolabile a mio piacere
-            vulns.push(path.node);
+            var obj = {
+              url: req.body.targetUrl,
+              Node: {
+                type: 'Identifier',
+                loc: {
+                  start: {
+                    line: path.node.loc.start.line,
+                    column: path.node.loc.start.column,
+                    index: path.node.loc.start.index
+                  },
+                  end: {
+                    line: path.node.loc.end.line,
+                    column: path.node.loc.end.column,
+                    index: path.node.loc.end.index
+                  },
+                },
+                name: path.node.name
+              }
+            }
+            // Create schema vuln
+            var vuln = new Schema(obj);
+            // Save it to mongodb
+            vuln.save();
+            // push into the array
+            vulns.push(vuln);
           }
         });
       }
     });
-
-
-    //const Identifier = new Identifier({
-    //title: req.body.title,
-    //description: req.body.description,
-    //url: req.body.url
-    //})
-
-    //const saved = await Identifier.save();
-
-    res.status(200).send(vulns)
+    console.log(vulns);
+    res.status(200).send(vulns);
   } catch (err) {
     res.status(500).send(err);
   }

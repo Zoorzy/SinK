@@ -6,19 +6,27 @@
       'x.writeln',
       'x.insertAdjacentHTML(...)',
       'x.innerHTML'
-    ];
+    ],
+    results = document.getElementById('accordionFlushExample'),
+    patternSinks = document.getElementById('pattern-sinks'),
+    displayedAtLeastOne = false;
 
   document.getElementById('txthtml').addEventListener('JSexploded', (e) => {
-    var patternSinks = document.getElementById('pattern-sinks'), displayedAtLeastOne = false;
     for (var i = 0; i < sinks.length; i++) {
       var dd = document.createElement('dd');
       dd.textContent = sinks[i];
       patternSinks.appendChild(dd);
     }
 
+    // no js to analyze
+    if (!e.detail.data.length) {
+      setProgressBar(0, 100);
+      results.innerHTML += '<p class="text-center">No script sources to analyze were found</p>';
+      return;
+    }
+
     // iterate throught every JSexploded string
     for (let i = 0; i < e.detail.data.length; i++) {
-      displayedAtLeastOne = true;
       var elem = e.detail.data[i]
       // Remove comments
       elem = elem.replace(/\/\*[\s\S]*?\*\/|([^:]|^)\/\/.*$/gm, '');
@@ -34,38 +42,39 @@
         path: '/api/ASTScanner',
         data: window.encodeURIComponent(elem),
         id: i,
-        targetUrl : e.detail.targetUrl
+        targetUrl: e.detail.targetUrl
       });
       ++running;
     }
 
-    if (!displayedAtLeastOne) {
-      setProgressBar(0, 100);
-      document.getElementById('accordionFlushExample').innerHTML += '<p class="text-center">No script sources to analyze were found</p>';
-    }
   });
 
   function displayResults(e) {
     --running;
     if (running == 0) {
       setProgressBar(0, 100);
-      document.getElementById('accordionFlushExample').innerHTML += '<p class="text-center">No more results</p>';
+      if (!displayedAtLeastOne) {
+        results.innerHTML += '<p class="text-center">No vulnerabilities found</p>';
+        return;
+      }
+      results.innerHTML += '<p class="text-center">No more results</p>';
       return;
     }
+    //if (e.data.status !== 200) return;
 
-    if (e.data.status !== 200) return;
+    if (e.data.response == '[]') return;
 
     var obj = JSON.parse(e.data.response);
     var str = JSON.stringify(obj, undefined, 4);
 
-    if (str == '[]') return;
 
-    document.getElementById('accordionFlushExample').innerHTML += '<h2>Script File n.' + (e.data.id + 1) + '</h2>';
+    results.innerHTML += '<h2>Script File n.' + (e.data.id + 1) + ' returned a ' + e.data.status + ' status</h2>';
     output(syntaxHighlight(str));
+    displayedAtLeastOne = true;
   }
 
   function output(inp) {
-    document.getElementById('accordionFlushExample').appendChild(document.createElement('pre')).innerHTML = inp;
+    results.appendChild(document.createElement('pre')).innerHTML = inp;
   }
 
   function syntaxHighlight(json) {
