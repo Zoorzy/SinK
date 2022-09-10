@@ -48,19 +48,19 @@ router.post('/ASTScanner', async (req, res) => {
         });
       }
     });
-    console.log(vulns);
+
     res.status(200).send(vulns);
   } catch (err) {
     res.status(500).send(err);
   }
 })
 
-/*
+
 // GET THE LAST 10 VULNERABILITIES REPORT
-router.get('/vuln', async (req, res) => {
+router.get('/vulns', async (req, res) => {
   try {
     let limit = 10
-    const vulnerabilities = await Vulnerability.find().limit(limit)
+    const vulnerabilities = await Schema.find().limit(limit)
     res.json(vulnerabilities)
   } catch (err) {
     res.json(err)
@@ -70,28 +70,11 @@ router.get('/vuln', async (req, res) => {
 // SPECIFIC VULNERABILITY
 router.get('/:vulnId', async (req, res) => {
   try {
-    const vulnerability = await Vulnerability.findById(req.params.vulnId)
+    const vulnerability = await Schema.findById(req.params.vulnId)
     res.json(vulnerability)
   } catch (err) {
     res.json(err)
   }
 })
-/*
-// SUBMTS A VULNERABILITY
-router.post('/new', bodyParser.json(), async (req, res) => {
-  const vulnerability = new Vulnerability({
-    title: req.body.title,
-    description: req.body.description,
-    url: req.body.url
-  })
-
-  try {
-    const saved = await vulnerability.save();
-    res.json(saved);
-  } catch (err) {
-    res.json(err);
-  }
-})
-*/
 
 module.exports = router;
