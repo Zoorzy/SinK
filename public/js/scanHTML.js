@@ -37,7 +37,10 @@
 
       // Recover Abstract Sintax Tree .....
       worker = new Worker("../../public/workers/getResource.js");
-      worker.onmessage = displayResults;
+      worker.onmessage = (e) => {
+        displayResults(e);
+        saveLocalStorage(e);
+      };
       worker.postMessage({
         path: '/api/ASTScanner',
         data: window.encodeURIComponent(elem),
@@ -48,6 +51,16 @@
     }
 
   });
+
+  function saveLocalStorage(e) {
+    parsedResponse = JSON.parse(e.data.response);
+    for (var i = 0; i < parsedResponse.length; i++) {
+      if ((typeof parsedResponse[i] == 'undefined') || parsedResponse[i] == '') { return; }
+      // se è tornata almeno una vulnerabilità tra quelle analizzate
+      localStorage.setItem('SinKScan', parsedResponse[i].url);
+      return;
+    }
+  }
 
   function displayResults(e) {
     --running;
@@ -62,7 +75,7 @@
     }
     //if (e.data.status !== 200) return;
 
-    if (e.data.response == '[]') return;
+    if (typeof e.data.response == 'undefined' || e.data.response == '[]') return;
 
     var obj = JSON.parse(e.data.response);
     var str = JSON.stringify(obj, undefined, 4);
