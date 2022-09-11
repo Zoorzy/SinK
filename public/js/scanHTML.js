@@ -7,9 +7,9 @@
       'x.insertAdjacentHTML(...)',
       'x.innerHTML'
     ],
-    results = document.getElementById('accordionFlushExample'),
-    patternSinks = document.getElementById('pattern-sinks'),
     displayedAtLeastOne = false;
+  const results = document.getElementById('resultsContainer'),
+    patternSinks = document.getElementById('pattern-sinks');
 
   document.getElementById('txthtml').addEventListener('JSexploded', (e) => {
     for (var i = 0; i < sinks.length; i++) {
@@ -66,7 +66,6 @@
 
     var obj = JSON.parse(e.data.response);
     var str = JSON.stringify(obj, undefined, 4);
-
 
     results.innerHTML += '<h2>Script File n.' + (e.data.id + 1) + ' returned a ' + e.data.status + ' status</h2>';
     output(syntaxHighlight(str));
