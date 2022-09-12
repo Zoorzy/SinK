@@ -6,5 +6,4 @@ const public = path.join(__dirname, '..', 'public')
 router.use(express.static(public))
 router.use(express.json());
 
-/**/
 module.exports = router;

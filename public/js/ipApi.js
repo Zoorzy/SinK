@@ -1,12 +1,10 @@
 //ip-api
 let url = new URL(document.getElementById('url').value);
-//let map = document.getElementById('map')
 fetch('http://ip-api.com/json/' + url.host)
   .then((response) => response.json())
   .then((data) => {
     document.getElementById('apiQuery').textContent = data.query
     if (data.status == 'fail') return
-    //map.src = 'https://embed.waze.com/iframe?zoom=10&lat=' + data.lat + '&lon=' + data.lon
     document.getElementById('apiStatus').textContent = data.status
     document.getElementById('apiCountry').textContent = data.country
     document.getElementById('apiCountryCode').textContent = '(' + data.countryCode + ')'

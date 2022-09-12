@@ -15,16 +15,6 @@ const Schema = mongoose.Schema({
       type: String,
       required: true
     },
-    /*
-    start: {
-      type: Number,
-      required: true
-    },
-    end: {
-      type: Number,
-      required: true
-    },
-    */
     loc: {
       start: {
         line: {
@@ -55,16 +45,7 @@ const Schema = mongoose.Schema({
           required: true
         }
 
-      }/*,
-      filename: {
-        type: String,
-        required: true
-      },
-      identifierName: {
-        type: String,
-        required: true
       }
-      */
     },
     name: {
       type: String,
