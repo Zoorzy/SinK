@@ -5,9 +5,6 @@
   <div class="navbar-nav align-items-center ms-auto">
 
     <!-- Notification Start -->
-    <script>
-      const parsedLocalStorage = JSON.parse(localStorage.getItem('SinKScan'))
-    </script>
     <div class="nav-item dropdown">
       <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
         <i class="fa fa-envelope me-lg-2"></i>
@@ -19,14 +16,17 @@
       <script>
         window.addEventListener('load', () => {
           var root = document.getElementById('dropdown-menu');
-          for (var i = 0; i < parsedLocalStorage.length || i < 3; i++) {
+          //const parsedLocalStorage = JSON.parse(localStorage.getItem('SinKScan'));
+          var parsedLocalStorage;
+          if (parsedLocalStorage = JSON.parse(localStorage.getItem('SinKScan'))) {
+          for (var i = 0; i < parsedLocalStorage.length && i < 3; i++) {
             var a = document.createElement('a');
             a.href = '#'
             a.classList.add('dropdown-item');
 
             var h6 = document.createElement('h6');
             h6.classList.add('fw-normal', 'mb-0');
-            h6.textContent = (parsedLocalStorage[0].url) ? parsedLocalStorage[0].url : ''
+            h6.textContent = parsedLocalStorage[i].url
 
             a.appendChild(h6);
 
@@ -36,12 +36,13 @@
             root.appendChild(a);
             root.appendChild(hr);
           }
-          var gotoReports = document.createElement('a');
-          gotoReports.classList.add('dropdown-item', 'text-center');
-          gotoReports.href = '../pages/reports.ejs';
-          gotoReports.textContent = 'See all scans';
+        }
+        var gotoReports = document.createElement('a');
+        gotoReports.classList.add('dropdown-item', 'text-center');
+        gotoReports.href = '/reports.ejs';
+        gotoReports.textContent = 'See all scans';
 
-          root.appendChild(gotoReports);
+        root.appendChild(gotoReports);
         })
       </script>
     </div>

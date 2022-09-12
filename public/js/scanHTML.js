@@ -58,11 +58,14 @@
       if ((typeof parsedResponse[i] == 'undefined') || parsedResponse[i] == '') { return; }
       // se è tornata almeno una vulnerabilità tra quelle analizzate
 
-      var items = [];
-      var item = {'url': parsedResponse[i].url};
+      if (!window.localStorage.getItem('SinKScan')) window.localStorage.setItem('SinKScan', '[]');
+      var items = JSON.parse(window.localStorage.getItem('SinKScan'));
+      var item = { 'url': parsedResponse[i].url };
+
+      if (!(items.length < 3)) { items.shift(); }
+
       items.push(item);
-      items.push(item);
-      items.push(item);
+
       localStorage.setItem('SinKScan', JSON.stringify(items));
       return;
     }
