@@ -57,7 +57,13 @@
     for (var i = 0; i < parsedResponse.length; i++) {
       if ((typeof parsedResponse[i] == 'undefined') || parsedResponse[i] == '') { return; }
       // se è tornata almeno una vulnerabilità tra quelle analizzate
-      localStorage.setItem('SinKScan', parsedResponse[i].url);
+
+      var items = [];
+      var item = {'url': parsedResponse[i].url};
+      items.push(item);
+      items.push(item);
+      items.push(item);
+      localStorage.setItem('SinKScan', JSON.stringify(items));
       return;
     }
   }
